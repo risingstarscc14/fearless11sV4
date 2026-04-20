@@ -8,16 +8,16 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
 <style>
   :root {
-    --teal: #2a9d8f;
-    --teal-light: #52c5b5;
-    --teal-dark: #1a6b60;
+    --teal: #FF8C00;
+    --teal-light: #ffaa33;
+    --teal-dark: #000000;
     --gold: #e9c46a;
     --coral: #e76f51;
-    --bg: #0d1f1e;
-    --surface: #132a28;
-    --surface2: #1c3836;
+    --bg: #0d0d0d;
+    --surface: #1a1a1a;
+    --surface2: #222222;
     --text: #e8f5f3;
-    --muted: #7ab5ae;
+    --muted: #cc8833;
   }
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -28,8 +28,8 @@
     font-family: 'DM Sans', sans-serif;
     min-height: 100vh;
     padding: 32px 20px;
-    background-image: radial-gradient(ellipse at 20% 0%, #1a4a40 0%, transparent 60%),
-                      radial-gradient(ellipse at 80% 100%, #0f3028 0%, transparent 60%);
+    background-image: radial-gradient(ellipse at 20% 0%, #2a1a00 0%, transparent 60%),
+                      radial-gradient(ellipse at 80% 100%, #1a0f00 0%, transparent 60%);
   }
 
   header {
@@ -170,7 +170,7 @@
 
   .player-card.best {
     border-color: var(--gold);
-    background: linear-gradient(160deg, var(--surface), #2a2a10);
+    background: linear-gradient(160deg, var(--surface), #2a1a00);
   }
 
   .player-card.worst {
@@ -472,23 +472,23 @@ const fours = [1, 5, 6, 1, 0, 3, 2, 0];
 const sixes = [0, 2, 2, 1, 0, 1, 0, 0];
 const balls = [9, 34, 27, 11, 1, 9, 12, 2];
 
-const teal = 'rgba(42,197,181,0.85)';
-const tealBorder = '#2ac5b5';
+const teal = 'rgba(255,140,0,0.85)';
+const tealBorder = '#FF8C00';
 const gold = 'rgba(233,196,106,0.85)';
 const goldBorder = '#e9c46a';
 const coral = 'rgba(231,111,81,0.7)';
 const coralBorder = '#e76f51';
 
 const gridColor = 'rgba(255,255,255,0.06)';
-const tickColor = '#7ab5ae';
+const tickColor = '#cc8833';
 
 const baseOptions = {
   responsive: true,
   plugins: {
     legend: { display: false },
     tooltip: {
-      backgroundColor: '#132a28',
-      borderColor: '#2a9d8f',
+      backgroundColor: '#1a1a1a',
+      borderColor: '#FF8C00',
       borderWidth: 1,
       titleColor: '#e8f5f3',
       bodyColor: '#7ab5ae',
