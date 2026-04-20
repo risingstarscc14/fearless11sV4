@@ -8,16 +8,16 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
 <style>
   :root {
-    --teal: #FF8C00;
-    --teal-light: #ffaa33;
-    --teal-dark: #000000;
+    --teal: #f55211;
+    --teal-light: #f56931;
+    --teal-dark: #1f1c1b;
     --gold: #e9c46a;
     --coral: #e76f51;
     --bg: #0d0d0d;
     --surface: #1a1a1a;
     --surface2: #222222;
     --text: #e8f5f3;
-    --muted: #cc8833;
+    --muted: #e76f51;
   }
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -473,14 +473,14 @@ const sixes = [0, 2, 2, 1, 0, 1, 0, 0];
 const balls = [9, 34, 27, 11, 1, 9, 12, 2];
 
 const teal = 'rgba(255,140,0,0.85)';
-const tealBorder = '#FF8C00';
+const tealBorder = '#f55211';
 const gold = 'rgba(233,196,106,0.85)';
 const goldBorder = '#e9c46a';
 const coral = 'rgba(231,111,81,0.7)';
 const coralBorder = '#e76f51';
 
 const gridColor = 'rgba(255,255,255,0.06)';
-const tickColor = '#cc8833';
+const tickColor = '#e76f51';
 
 const baseOptions = {
   responsive: true,
@@ -488,7 +488,7 @@ const baseOptions = {
     legend: { display: false },
     tooltip: {
       backgroundColor: '#1a1a1a',
-      borderColor: '#FF8C00',
+      borderColor: '#f55211',
       borderWidth: 1,
       titleColor: '#e8f5f3',
       bodyColor: '#7ab5ae',

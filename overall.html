@@ -8,8 +8,8 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
 <style>
   :root {
-    --orange: #FF8C00;
-    --orange-light: #ffaa33;
+    --orange: #f55211;
+    --orange-light: #f56931;
     --orange-dim: rgba(255,140,0,0.12);
     --gold: #e9c46a;
     --coral: #e76f51;
@@ -178,7 +178,7 @@
   .section-line {
     flex: 1;
     height: 1px;
-    background: linear-gradient(90deg, rgba(255,140,0,0.2), transparent);
+    background: linear-gradient(90deg, 1f1c1b, transparent);
   }
 
   /* ── Summary stat row ── */
@@ -330,7 +330,7 @@
 
   .wick-badge {
     display: inline-block;
-    background: rgba(255,140,0,0.15);
+    background: #bf5a32;
     border: 1px solid rgba(255,140,0,0.3);
     color: var(--orange-light);
     font-weight: 700;
@@ -771,7 +771,7 @@ const runsCon  = [21, 17, 23, 12, 6, 0];
 
 // ── COLORS ───────────────────────────────────────────
 const OR   = 'rgba(255,140,0,0.85)';
-const ORB  = '#FF8C00';
+const ORB  = '#f55211';
 const GOLD = 'rgba(233,196,106,0.85)';
 const GOLDB= '#e9c46a';
 const RED  = 'rgba(231,111,81,0.75)';
@@ -788,7 +788,7 @@ const baseOpts = {
     legend: { display: false },
     tooltip: {
       backgroundColor: '#161616',
-      borderColor: '#FF8C00',
+      borderColor: '#f55211',
       borderWidth: 1,
       titleColor: '#f0f0f0',
       bodyColor: '#888',
@@ -893,7 +893,7 @@ new Chart(document.getElementById('pieChart'), {
       },
       tooltip: {
         backgroundColor: '#161616',
-        borderColor: '#FF8C00',
+        borderColor: '#f55211',
         borderWidth: 1,
         titleColor: '#f0f0f0',
         bodyColor: '#888',
