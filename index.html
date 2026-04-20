@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rising Stars CC — Season Hub</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,700;1,300&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --orange: #FF8C00;
+    --orange-light: #ffaa33;
+    --orange-dim: rgba(255,140,0,0.15);
+    --black: #000000;
+    --bg: #0d0d0d;
+    --surface: #161616;
+    --surface2: #1f1f1f;
+    --border: rgba(255,140,0,0.2);
+    --text: #f0f0f0;
+    --muted: #888;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* ── Noise texture overlay ── */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* ── Glowing orb backgrounds ── */
+  .orb {
+    position: fixed;
+    border-radius: 50%;
+    filter: blur(120px);
+    pointer-events: none;
+    z-index: 0;
+  }
+  .orb-1 { width: 600px; height: 600px; background: rgba(255,140,0,0.07); top: -200px; right: -100px; }
+  .orb-2 { width: 400px; height: 400px; background: rgba(255,140,0,0.05); bottom: 0; left: -100px; }
+
+  /* ── Hero ── */
+  .hero {
+    position: relative;
+    z-index: 1;
+    padding: 60px 24px 48px;
+    text-align: center;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .logo-wrap {
+    display: inline-block;
+    position: relative;
+    margin-bottom: 28px;
+  }
+
+  .logo-wrap img {
+    width: 120px;
+    height: 120px;
+    object-fit: contain;
+    border-radius: 50%;
+    border: 2px solid var(--border);
+    box-shadow: 0 0 40px rgba(255,140,0,0.2), 0 0 80px rgba(255,140,0,0.08);
+    display: block;
+    animation: logoPulse 4s ease-in-out infinite;
+  }
+
+  @keyframes logoPulse {
+    0%, 100% { box-shadow: 0 0 40px rgba(255,140,0,0.2), 0 0 80px rgba(255,140,0,0.08); }
+    50% { box-shadow: 0 0 60px rgba(255,140,0,0.35), 0 0 120px rgba(255,140,0,0.15); }
+  }
+
+  .season-tag {
+    display: inline-block;
+    background: var(--orange-dim);
+    border: 1px solid rgba(255,140,0,0.3);
+    color: var(--orange-light);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    padding: 5px 16px;
+    border-radius: 20px;
+    margin-bottom: 16px;
+  }
+
+  .hero h1 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(48px, 12vw, 96px);
+    letter-spacing: 6px;
+    line-height: 0.95;
+    background: linear-gradient(160deg, #ffffff 30%, var(--orange-light) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 8px;
+  }
+
+  .hero-sub {
+    font-size: 13px;
+    letter-spacing: 3px;
+    color: var(--muted);
+    text-transform: uppercase;
+    margin-bottom: 36px;
+  }
+
+  /* ── Season progress bar ── */
+  .progress-wrap {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .progress-label {
+    font-size: 11px;
+    letter-spacing: 2px;
+    color: var(--muted);
+    text-transform: uppercase;
+  }
+
+  .progress-track {
+    display: flex;
+    gap: 6px;
+    align-items: center;
+  }
+
+  .pip {
+    width: 36px;
+    height: 6px;
+    border-radius: 3px;
+    background: var(--surface2);
+    border: 1px solid rgba(255,255,255,0.08);
+    transition: background 0.3s;
+  }
+
+  .pip.done { background: var(--orange); border-color: var(--orange); }
+  .pip.current {
+    background: linear-gradient(90deg, var(--orange), transparent);
+    border-color: var(--orange);
+    animation: pipPulse 1.5s ease-in-out infinite;
+  }
+
+  @keyframes pipPulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+  }
+
+  /* ── Main content ── */
+  .main {
+    position: relative;
+    z-index: 1;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 48px 24px 64px;
+  }
+
+  .section-header {
+    display: flex;
+    align-items: baseline;
+    gap: 14px;
+    margin-bottom: 28px;
+  }
+
+  .section-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 28px;
+    letter-spacing: 4px;
+    color: var(--text);
+  }
+
+  .section-line {
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(90deg, var(--border), transparent);
+  }
+
+  /* ── Match cards ── */
+  .matches {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    margin-bottom: 56px;
+  }
+
+  .match-card {
+    display: grid;
+    grid-template-columns: 56px 1fr auto;
+    align-items: center;
+    gap: 20px;
+    background: var(--surface);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 14px;
+    padding: 20px 24px;
+    text-decoration: none;
+    color: inherit;
+    position: relative;
+    overflow: hidden;
+    transition: border-color 0.25s, transform 0.25s, box-shadow 0.25s;
+  }
+
+  .match-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg, var(--orange-dim), transparent 60%);
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+
+  .match-card:hover {
+    border-color: rgba(255,140,0,0.4);
+    transform: translateX(4px);
+    box-shadow: -4px 0 0 var(--orange), 0 8px 40px rgba(0,0,0,0.4);
+  }
+
+  .match-card:hover::before { opacity: 1; }
+
+  /* Completed card */
+  .match-card.done { border-color: rgba(255,140,0,0.15); }
+
+  /* Upcoming card */
+  .match-card.upcoming {
+    opacity: 0.55;
+    cursor: default;
+    pointer-events: none;
+  }
+
+  .match-card.upcoming:hover { transform: none; box-shadow: none; }
+
+  /* League number */
+  .league-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 36px;
+    color: var(--orange);
+    line-height: 1;
+    position: relative;
+    z-index: 1;
+  }
+
+  .league-num .num-super {
+    font-size: 14px;
+    color: var(--muted);
+    display: block;
+    letter-spacing: 2px;
+    margin-bottom: 2px;
+  }
+
+  /* Match info */
+  .match-info { position: relative; z-index: 1; }
+
+  .match-vs {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 20px;
+    letter-spacing: 2px;
+    color: var(--text);
+    margin-bottom: 5px;
+  }
+
+  .match-meta {
+    display: flex;
+    gap: 14px;
+    flex-wrap: wrap;
+  }
+
+  .meta-pill {
+    font-size: 11px;
+    letter-spacing: 1px;
+    color: var(--muted);
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+
+  .meta-pill.result-win {
+    color: #4ade80;
+    font-weight: 600;
+  }
+
+  .meta-pill.result-loss {
+    color: #f87171;
+    font-weight: 600;
+  }
+
+  /* CTA / status badge */
+  .card-action {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 8px;
+  }
+
+  .view-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--orange-dim);
+    border: 1px solid rgba(255,140,0,0.3);
+    color: var(--orange-light);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    padding: 7px 14px;
+    border-radius: 8px;
+    text-transform: uppercase;
+    transition: background 0.2s, border-color 0.2s;
+    white-space: nowrap;
+  }
+
+  .match-card:hover .view-btn {
+    background: rgba(255,140,0,0.25);
+    border-color: var(--orange);
+  }
+
+  .status-badge {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    border-radius: 20px;
+  }
+
+  .status-badge.upcoming-badge {
+    background: rgba(255,255,255,0.06);
+    color: var(--muted);
+    border: 1px solid rgba(255,255,255,0.08);
+  }
+
+  .score-chip {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 15px;
+    letter-spacing: 1px;
+    color: var(--orange-light);
+  }
+
+  /* ── Stats row ── */
+  .stats-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 14px;
+    margin-bottom: 56px;
+  }
+
+  .stat-card {
+    background: var(--surface);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 12px;
+    padding: 20px 16px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .stat-card::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--orange), transparent);
+    opacity: 0.4;
+  }
+
+  .stat-val {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 38px;
+    color: var(--orange-light);
+    line-height: 1;
+    margin-bottom: 6px;
+  }
+
+  .stat-lbl {
+    font-size: 10px;
+    letter-spacing: 2px;
+    color: var(--muted);
+    text-transform: uppercase;
+  }
+
+  /* ── Footer ── */
+  footer {
+    position: relative;
+    z-index: 1;
+    border-top: 1px solid var(--border);
+    padding: 24px;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+  }
+
+  footer img {
+    width: 28px;
+    height: 28px;
+    object-fit: contain;
+    border-radius: 50%;
+    opacity: 0.6;
+  }
+
+  footer span {
+    font-size: 12px;
+    letter-spacing: 2px;
+    color: var(--muted);
+    text-transform: uppercase;
+  }
+
+  /* ── Responsive ── */
+  @media (max-width: 560px) {
+    .match-card {
+      grid-template-columns: 44px 1fr;
+      gap: 14px;
+    }
+    .card-action { display: none; }
+    .match-card.done { border-left: 3px solid var(--orange); }
+  }
+
+  /* ── Entrance animation ── */
+  .match-card {
+    animation: slideIn 0.4s ease both;
+  }
+  .match-card:nth-child(1) { animation-delay: 0.05s; }
+  .match-card:nth-child(2) { animation-delay: 0.1s; }
+  .match-card:nth-child(3) { animation-delay: 0.15s; }
+  .match-card:nth-child(4) { animation-delay: 0.2s; }
+  .match-card:nth-child(5) { animation-delay: 0.25s; }
+
+  @keyframes slideIn {
+    from { opacity: 0; transform: translateY(16px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .match-card.upcoming { animation: slideIn 0.4s ease both; }
+
+  /* ── Overall Stats CTA ── */
+  .overall-cta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: linear-gradient(135deg, rgba(255,140,0,0.12), rgba(255,140,0,0.04));
+    border: 1px solid rgba(255,140,0,0.35);
+    border-radius: 14px;
+    padding: 22px 24px;
+    text-decoration: none;
+    color: inherit;
+    margin-top: 10px;
+    position: relative;
+    overflow: hidden;
+    transition: border-color 0.25s, box-shadow 0.25s, transform 0.2s;
+    animation: slideIn 0.4s 0.3s ease both;
+  }
+  .overall-cta::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--orange), var(--orange-light), transparent);
+  }
+  .overall-cta:hover {
+    border-color: var(--orange);
+    box-shadow: 0 0 30px rgba(255,140,0,0.15);
+    transform: translateY(-2px);
+  }
+  .overall-cta-left { display: flex; align-items: center; gap: 16px; }
+  .overall-icon { font-size: 28px; line-height: 1; }
+  .overall-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 22px;
+    letter-spacing: 3px;
+    color: var(--orange-light);
+    margin-bottom: 4px;
+  }
+  .overall-desc { font-size: 12px; color: var(--muted); letter-spacing: 0.5px; }
+  .overall-arrow {
+    font-size: 28px;
+    color: var(--orange);
+    font-family: 'Bebas Neue', sans-serif;
+    transition: transform 0.2s;
+  }
+  .overall-cta:hover .overall-arrow { transform: translateX(4px); }
+
+</style>
+</head>
+<body>
+
+<div class="orb orb-1"></div>
+<div class="orb orb-2"></div>
+
+<!-- HERO -->
+<header class="hero">
+  <div class="logo-wrap">
+    <img src="0034f881-c6cd-4306-85f8-0e2ceba6f6a2.jpeg" alt="Rising Stars CC Logo">
+  </div>
+  <div class="season-tag">Season 2026</div>
+  <h1>Rising Stars CC</h1>
+  <p class="hero-sub">League Performance Hub</p>
+
+  <div class="progress-wrap">
+    <div class="progress-label">Season Progress — 1 of 5 Leagues</div>
+    <div class="progress-track">
+      <div class="pip done"></div>
+      <div class="pip current"></div>
+      <div class="pip"></div>
+      <div class="pip"></div>
+      <div class="pip"></div>
+    </div>
+  </div>
+</header>
+
+<!-- MAIN -->
+<main class="main">
+
+  <!-- Season snapshot -->
+  <div class="section-header">
+    <div class="section-title">Season Snapshot</div>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="stats-row">
+    <div class="stat-card">
+      <div class="stat-val">1</div>
+      <div class="stat-lbl">Played</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-val">1</div>
+      <div class="stat-lbl">Won</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-val">0</div>
+      <div class="stat-lbl">Lost</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-val">177</div>
+      <div class="stat-lbl">Runs Scored</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-val">10</div>
+      <div class="stat-lbl">Wickets Taken</div>
+    </div>
+  </div>
+
+  <!-- Match cards -->
+  <div class="section-header">
+    <div class="section-title">All Matches</div>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="matches">
+
+    <!-- League 1 — DONE -->
+    <a href="index.html" class="match-card done">
+      <div class="league-num">
+        <span class="num-super">LGE</span>01
+      </div>
+      <div class="match-info">
+        <div class="match-vs">vs Phoenix X1</div>
+        <div class="match-meta">
+          <span class="meta-pill result-win">✓ Won</span>
+          <span class="meta-pill">🏏 177/6 (17.0 ov)</span>
+          <span class="meta-pill">⚡ RR 10.4</span>
+        </div>
+      </div>
+      <div class="card-action">
+        <div class="view-btn">View →</div>
+        <div class="score-chip">177/6</div>
+      </div>
+    </a>
+
+    <!-- League 2 — Upcoming -->
+    <div class="match-card upcoming">
+      <div class="league-num">
+        <span class="num-super">LGE</span>02
+      </div>
+      <div class="match-info">
+        <div class="match-vs">Opponent TBD</div>
+        <div class="match-meta">
+          <span class="meta-pill">📅 Upcoming</span>
+        </div>
+      </div>
+      <div class="card-action">
+        <div class="status-badge upcoming-badge">Soon</div>
+      </div>
+    </div>
+
+    <!-- League 3 — Upcoming -->
+    <div class="match-card upcoming">
+      <div class="league-num">
+        <span class="num-super">LGE</span>03
+      </div>
+      <div class="match-info">
+        <div class="match-vs">Opponent TBD</div>
+        <div class="match-meta">
+          <span class="meta-pill">📅 Upcoming</span>
+        </div>
+      </div>
+      <div class="card-action">
+        <div class="status-badge upcoming-badge">Soon</div>
+      </div>
+    </div>
+
+    <!-- League 4 — Upcoming -->
+    <div class="match-card upcoming">
+      <div class="league-num">
+        <span class="num-super">LGE</span>04
+      </div>
+      <div class="match-info">
+        <div class="match-vs">Opponent TBD</div>
+        <div class="match-meta">
+          <span class="meta-pill">📅 Upcoming</span>
+        </div>
+      </div>
+      <div class="card-action">
+        <div class="status-badge upcoming-badge">Soon</div>
+      </div>
+    </div>
+
+    <!-- League 5 — Upcoming -->
+    <div class="match-card upcoming">
+      <div class="league-num">
+        <span class="num-super">LGE</span>05
+      </div>
+      <div class="match-info">
+        <div class="match-vs">Opponent TBD</div>
+        <div class="match-meta">
+          <span class="meta-pill">📅 Upcoming</span>
+        </div>
+      </div>
+      <div class="card-action">
+        <div class="status-badge upcoming-badge">Soon</div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Overall Stats CTA -->
+  <a href="overall.html" class="overall-cta">
+    <div class="overall-cta-left">
+      <div class="overall-icon">📈</div>
+      <div>
+        <div class="overall-title">Season Overall Stats</div>
+        <div class="overall-desc">Leading run scorers · Batting &amp; bowling charts · Full leaderboards</div>
+      </div>
+    </div>
+    <div class="overall-arrow">→</div>
+  </a>
+
+</main>
+
+<footer>
+  <img src="0034f881-c6cd-4306-85f8-0e2ceba6f6a2.jpeg" alt="Logo">
+  <span>Rising Stars CC · Season 2026</span>
+</footer>
+
+</body>
+</html>
