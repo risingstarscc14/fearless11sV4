@@ -3,21 +3,22 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Rising Stars CC — Season Stats</title>
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;700&display=swap" rel="stylesheet">
+<title>Rising Stars CC Kovaipudur 2026 / Fearless 11s Tournament — Season 4 · Season Stats</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,700;1,300&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
 <style>
   :root {
     --orange: #f55211;
     --orange-light: #f56931;
-    --orange-dim: rgba(255,140,0,0.12);
+    --orange-dim: rgba(255,140,0,0.15);
     --gold: #e9c46a;
     --coral: #e76f51;
     --green: #4ade80;
+    --black: #1f1c1b;
     --bg: #0d0d0d;
     --surface: #161616;
     --surface2: #1f1f1f;
-    --border: rgba(255,140,0,0.18);
+    --border: rgba(255,140,0,0.2);
     --text: #f0f0f0;
     --muted: #888;
   }
@@ -30,9 +31,7 @@
     font-family: 'DM Sans', sans-serif;
     min-height: 100vh;
     padding: 0 0 60px;
-    background-image:
-      radial-gradient(ellipse at 10% 0%, rgba(255,140,0,0.06) 0%, transparent 55%),
-      radial-gradient(ellipse at 90% 80%, rgba(255,140,0,0.04) 0%, transparent 55%);
+    
   }
 
   /* ── Top nav ── */
@@ -178,7 +177,7 @@
   .section-line {
     flex: 1;
     height: 1px;
-    background: linear-gradient(90deg, 1f1c1b, transparent);
+    background: linear-gradient(90deg, var(--border), transparent);
   }
 
   /* ── Summary stat row ── */
@@ -330,7 +329,7 @@
 
   .wick-badge {
     display: inline-block;
-    background: #bf5a32;
+    background: rgba(245,82,17,0.15);
     border: 1px solid rgba(255,140,0,0.3);
     color: var(--orange-light);
     font-weight: 700;
@@ -395,6 +394,31 @@
     opacity: 0.5;
   }
 
+
+  footer {
+    position: relative;
+    z-index: 1;
+    border-top: 1px solid var(--border);
+    padding: 24px;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+  }
+  footer img {
+    width: 28px; height: 28px;
+    object-fit: contain;
+    border-radius: 50%;
+    opacity: 0.6;
+  }
+  footer span {
+    font-size: 12px;
+    letter-spacing: 2px;
+    color: var(--muted);
+    text-transform: uppercase;
+  }
+
   /* ── Animations ── */
   .section { animation: fadeUp 0.5s ease both; }
   .section:nth-child(2) { animation-delay: 0.05s; }
@@ -411,9 +435,9 @@
 
 <!-- TOP NAV -->
 <nav class="topnav">
-  <a href="hub.html" class="nav-back">← Hub</a>
+  <a href="index.html" class="nav-back">← Hub</a>
   <div class="nav-title">Season Stats</div>
-  <img src="0034f881-c6cd-4306-85f8-0e2ceba6f6a2.jpeg" alt="Logo" class="nav-logo">
+  <img src="./logo.png" alt="Logo" class="nav-logo">
 </nav>
 
 <!-- HERO -->
@@ -752,7 +776,10 @@
 
 </div><!-- /wrap -->
 
-<footer>Rising Stars CC · Season 2026 · Stats updated after each league</footer>
+<footer>
+  <img src="./logo.png" alt="Logo">
+  <span>Rising Stars CC Kovaipudur 2026 / Fearless 11s Tournament — Season 4</span>
+</footer>
 
 <script>
 // ── DATA ──────────────────────────────────────────────
@@ -770,7 +797,7 @@ const overs    = [2.0, 2.0, 4.0, 2.0, 1.0, 0.1];
 const runsCon  = [21, 17, 23, 12, 6, 0];
 
 // ── COLORS ───────────────────────────────────────────
-const OR   = 'rgba(255,140,0,0.85)';
+const OR   = 'rgba(245,82,17,0.85)';
 const ORB  = '#f55211';
 const GOLD = 'rgba(233,196,106,0.85)';
 const GOLDB= '#e9c46a';

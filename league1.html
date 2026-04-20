@@ -3,33 +3,94 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Rising Stars CC — Match Performance</title>
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;700&display=swap" rel="stylesheet">
+<title>Rising Stars CC Kovaipudur 2026 / Fearless 11s Tournament — Season 4 · League 1</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,700;1,300&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
 <style>
   :root {
-    --teal: #f55211;
-    --teal-light: #f56931;
-    --teal-dark: #1f1c1b;
-    --gold: #e9c46a;
-    --coral: #e76f51;
+    --orange: #f55211;
+    --orange-light: #f56931;
+    --orange-dim: rgba(255,140,0,0.15);
+    --black: #1f1c1b;
+    --GOLD: #e9c46a;
+    --RED: #e76f51;
+    --green: #4ade80;
     --bg: #0d0d0d;
-    --surface: #1a1a1a;
-    --surface2: #222222;
-    --text: #e8f5f3;
-    --muted: #e76f51;
+    --surface: #161616;
+    --surface2: #1f1f1f;
+    --border: rgba(255,140,0,0.2);
+    --text: #f0f0f0;
+    --muted: #888;
   }
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
 
-  body {
+    body {
     background: var(--bg);
     color: var(--text);
     font-family: 'DM Sans', sans-serif;
     min-height: 100vh;
-    padding: 32px 20px;
-    background-image: radial-gradient(ellipse at 20% 0%, #2a1a00 0%, transparent 60%),
-                      radial-gradient(ellipse at 80% 100%, #1a0f00 0%, transparent 60%);
+    overflow-x: hidden;
+  }
+
+  /* ── Noise texture overlay ── */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* ── Glowing orb backgrounds ── */
+  .orb {
+    position: fixed;
+    border-radius: 50%;
+    filter: blur(120px);
+    pointer-events: none;
+    z-index: 0;
+  }
+  .orb-1 { width: 600px; height: 600px; background: rgba(255,140,0,0.07); top: -200px; right: -100px; }
+  .orb-2 { width: 400px; height: 400px; background: rgba(255,140,0,0.05); bottom: 0; left: -100px; }
+
+  /* ── Top nav ── */
+  .topnav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 18px 28px;
+    border-bottom: 1px solid var(--border);
+    position: sticky;
+    top: 0;
+    background: rgba(13,13,13,0.92);
+    backdrop-filter: blur(12px);
+    z-index: 10;
+  }
+  .nav-back {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--orange-light);
+    text-decoration: none;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    transition: opacity 0.2s;
+  }
+  .nav-back:hover { opacity: 0.7; }
+  .nav-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 20px;
+    letter-spacing: 4px;
+    color: var(--text);
+  }
+  .nav-logo {
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    object-fit: contain;
+    border: 1px solid var(--border);
   }
 
   header {
@@ -39,7 +100,7 @@
 
   .team-badge {
     display: inline-block;
-    background: linear-gradient(135deg, var(--teal), var(--teal-dark));
+    background: linear-gradient(135deg, var(--orange), var(--black));
     color: white;
     font-family: 'Bebas Neue', sans-serif;
     font-size: 13px;
@@ -54,7 +115,7 @@
     font-size: clamp(36px, 8vw, 64px);
     letter-spacing: 4px;
     line-height: 1;
-    background: linear-gradient(135deg, #fff 40%, var(--teal-light));
+    background: linear-gradient(135deg, #fff 40%, var(--orange-light));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -82,7 +143,7 @@
   .score-value {
     font-family: 'Bebas Neue', sans-serif;
     font-size: 42px;
-    color: var(--teal-light);
+    color: var(--orange-light);
     line-height: 1;
   }
 
@@ -114,7 +175,7 @@
 
   .card {
     background: var(--surface);
-    border: 1px solid rgba(42,157,143,0.2);
+    border: 1px solid var(--border);
     border-radius: 16px;
     padding: 24px;
     position: relative;
@@ -126,14 +187,14 @@
     position: absolute;
     top: 0; left: 0; right: 0;
     height: 3px;
-    background: linear-gradient(90deg, var(--teal), var(--teal-light));
+    background: linear-gradient(90deg, var(--orange), var(--orange-light));
   }
 
   .card-title {
     font-family: 'Bebas Neue', sans-serif;
     font-size: 20px;
     letter-spacing: 3px;
-    color: var(--teal-light);
+    color: var(--orange-light);
     margin-bottom: 20px;
     display: flex;
     align-items: center;
@@ -155,7 +216,7 @@
 
   .player-card {
     background: var(--surface);
-    border: 1px solid rgba(42,157,143,0.15);
+    border: 1px solid rgba(255,140,0,0.12);
     border-radius: 12px;
     padding: 16px 12px;
     text-align: center;
@@ -165,16 +226,16 @@
 
   .player-card:hover {
     transform: translateY(-3px);
-    border-color: var(--teal);
+    border-color: var(--orange);
   }
 
   .player-card.best {
-    border-color: var(--gold);
+    border-color: var(--GOLD);
     background: linear-gradient(160deg, var(--surface), #2a1a00);
   }
 
   .player-card.worst {
-    border-color: var(--coral);
+    border-color: var(--RED);
     background: linear-gradient(160deg, var(--surface), #2a1010);
   }
 
@@ -189,7 +250,7 @@
   .player-runs {
     font-size: 28px;
     font-weight: 700;
-    color: var(--teal-light);
+    color: var(--orange-light);
     line-height: 1;
   }
 
@@ -210,8 +271,8 @@
     text-transform: uppercase;
   }
 
-  .badge.gold { background: rgba(233,196,106,0.2); color: var(--gold); }
-  .badge.red { background: rgba(231,111,81,0.2); color: var(--coral); }
+  .badge.gold { background: rgba(233,196,106,0.2); color: var(--GOLD); }
+  .badge.red { background: rgba(231,111,81,0.2); color: var(--RED); }
 
   .full-card {
     max-width: 1100px;
@@ -240,20 +301,20 @@
     border-bottom: 1px solid rgba(255,255,255,0.04);
   }
 
-  .bowling-table tr:hover td { background: rgba(42,157,143,0.06); }
+  .bowling-table tr:hover td { background: rgba(245,82,17,0.05); }
 
   .bowling-table .bowler-name { font-weight: 600; color: var(--text); }
   .wickets-badge {
     display: inline-block;
-    background: var(--teal-dark);
-    color: var(--teal-light);
+    background: var(--black);
+    color: var(--orange-light);
     border-radius: 6px;
     padding: 2px 8px;
     font-weight: 700;
     font-size: 13px;
   }
 
-  .wickets-badge.star { background: rgba(233,196,106,0.2); color: var(--gold); }
+  .wickets-badge.star { background: rgba(233,196,106,0.2); color: var(--GOLD); }
 
   .eco-bar {
     display: flex;
@@ -264,12 +325,12 @@
   .eco-fill {
     height: 6px;
     border-radius: 3px;
-    background: var(--teal);
+    background: var(--orange);
     transition: width 0.3s;
   }
 
-  .eco-fill.high { background: var(--coral); }
-  .eco-fill.med { background: var(--gold); }
+  .eco-fill.high { background: var(--RED); }
+  .eco-fill.med { background: var(--GOLD); }
 
   footer {
     text-align: center;
@@ -279,9 +340,37 @@
     margin-top: 20px;
     opacity: 0.6;
   }
+  /* ── Footer ── */
+  footer {
+    position: relative;
+    z-index: 1;
+    border-top: 1px solid var(--border);
+    padding: 24px;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+  }
+  footer img {
+    width: 28px; height: 28px;
+    object-fit: contain;
+    border-radius: 50%;
+    opacity: 0.6;
+  }
+  footer span {
+    font-size: 12px;
+    letter-spacing: 2px;
+    color: var(--muted);
+    text-transform: uppercase;
+  }
 </style>
 </head>
 <body>
+
+<div class="orb orb-1"></div>
+<div class="orb orb-2"></div>
+
 
 <header>
   <div class="team-badge">MATCH SCORECARD</div>
@@ -462,7 +551,10 @@
   </table>
 </div>
 
-<footer>RISING STARS CC · MATCH ANALYSIS · 2026</footer>
+<footer>
+  <img src="./logo.png" alt="Logo">
+  <span>Rising Stars CC Kovaipudur 2026 / Fearless 11s Tournament — Season 4</span>
+</footer>
 
 <script>
 const players = ['Adithya','Ayyanar','Velu V','Setti','Vishnu','Cahill V','Sathish R','Kumar'];
@@ -472,37 +564,34 @@ const fours = [1, 5, 6, 1, 0, 3, 2, 0];
 const sixes = [0, 2, 2, 1, 0, 1, 0, 0];
 const balls = [9, 34, 27, 11, 1, 9, 12, 2];
 
-const teal = 'rgba(255,140,0,0.85)';
-const tealBorder = '#f55211';
-const gold = 'rgba(233,196,106,0.85)';
-const goldBorder = '#e9c46a';
-const coral = 'rgba(231,111,81,0.7)';
-const coralBorder = '#e76f51';
+const OR   = 'rgba(245,82,17,0.85)';
+const ORB  = '#f55211';
+const GOLD = 'rgba(233,196,106,0.85)';
+const GOLDB= '#e9c46a';
+const RED  = 'rgba(231,111,81,0.75)';
+const REDB = '#e76f51';
+const GRN  = 'rgba(74,222,128,0.75)';
+const GRNB = '#4ade80';
 
-const gridColor = 'rgba(255,255,255,0.06)';
-const tickColor = '#e76f51';
+const GRID = 'rgba(255,255,255,0.05)';
+const TICK = '#888';
 
 const baseOptions = {
   responsive: true,
   plugins: {
     legend: { display: false },
     tooltip: {
-      backgroundColor: '#1a1a1a',
+      backgroundColor: '#161616',
       borderColor: '#f55211',
       borderWidth: 1,
-      titleColor: '#e8f5f3',
-      bodyColor: '#7ab5ae',
+      titleColor: '#f0f0f0',
+      bodyColor: '#888',
+      padding: 10,
     }
   },
   scales: {
-    x: {
-      ticks: { color: tickColor, font: { size: 11 } },
-      grid: { color: gridColor }
-    },
-    y: {
-      ticks: { color: tickColor, font: { size: 11 } },
-      grid: { color: gridColor }
-    }
+    x: { ticks: { color: TICK, font: { size: 11 } }, grid: { color: GRID } },
+    y: { ticks: { color: TICK, font: { size: 11 } }, grid: { color: GRID } }
   }
 };
 
@@ -513,8 +602,8 @@ new Chart(document.getElementById('runsChart'), {
     labels: players,
     datasets: [{
       data: runs,
-      backgroundColor: runs.map(r => r === Math.max(...runs) ? gold : teal),
-      borderColor: runs.map(r => r === Math.max(...runs) ? goldBorder : tealBorder),
+      backgroundColor: runs.map(r => r === Math.max(...runs) ? GOLD : OR),
+      borderColor: runs.map(r => r === Math.max(...runs) ? GOLDB : ORB),
       borderWidth: 2,
       borderRadius: 6,
     }]
@@ -529,8 +618,8 @@ new Chart(document.getElementById('srChart'), {
     labels: players,
     datasets: [{
       data: sr,
-      backgroundColor: sr.map(s => s < 80 ? coral : s === Math.max(...sr) ? gold : teal),
-      borderColor: sr.map(s => s < 80 ? coralBorder : s === Math.max(...sr) ? goldBorder : tealBorder),
+      backgroundColor: sr.map(s => s < 80 ? RED : s === Math.max(...sr) ? GOLD : OR),
+      borderColor: sr.map(s => s < 80 ? REDB : s === Math.max(...sr) ? GOLDB : ORB),
       borderWidth: 2,
       borderRadius: 6,
     }]
@@ -547,16 +636,16 @@ new Chart(document.getElementById('boundaryChart'), {
       {
         label: '4s',
         data: fours,
-        backgroundColor: teal,
-        borderColor: tealBorder,
+        backgroundColor: OR,
+        borderColor: ORB,
         borderWidth: 2,
         borderRadius: 4,
       },
       {
         label: '6s',
         data: sixes,
-        backgroundColor: gold,
-        borderColor: goldBorder,
+        backgroundColor: GOLD,
+        borderColor: GOLDB,
         borderWidth: 2,
         borderRadius: 4,
       }
@@ -581,8 +670,8 @@ new Chart(document.getElementById('ballsChart'), {
     labels: players,
     datasets: [{
       data: balls,
-      backgroundColor: teal,
-      borderColor: tealBorder,
+      backgroundColor: OR,
+      borderColor: ORB,
       borderWidth: 2,
       borderRadius: 6,
     }]
