@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Rising Stars CC Kovaipudur 2026 / Fearless 11s Tournament — Season 4 · Season Stats</title>
+<title>Rising Stars CC Kovaipudur 2026 / Fearless 11s Tournament — Season 4 · Overall Stats</title>
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,700;1,300&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
 <style>
@@ -31,10 +31,22 @@
     font-family: 'DM Sans', sans-serif;
     min-height: 100vh;
     padding: 0 0 60px;
-    
+    overflow-x: hidden;
   }
 
-  /* ── Top nav ── */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .orb { position: fixed; border-radius: 50%; filter: blur(120px); pointer-events: none; z-index: 0; }
+  .orb-1 { width: 600px; height: 600px; background: rgba(255,140,0,0.07); top: -200px; right: -100px; }
+  .orb-2 { width: 400px; height: 400px; background: rgba(255,140,0,0.05); bottom: 0; left: -100px; }
+
   .topnav {
     display: flex;
     align-items: center;
@@ -47,7 +59,6 @@
     backdrop-filter: blur(12px);
     z-index: 10;
   }
-
   .nav-back {
     display: inline-flex;
     align-items: center;
@@ -61,14 +72,12 @@
     transition: opacity 0.2s;
   }
   .nav-back:hover { opacity: 0.7; }
-
   .nav-title {
     font-family: 'Bebas Neue', sans-serif;
     font-size: 20px;
     letter-spacing: 4px;
     color: var(--text);
   }
-
   .nav-logo {
     width: 36px; height: 36px;
     border-radius: 50%;
@@ -76,13 +85,13 @@
     border: 1px solid var(--border);
   }
 
-  /* ── Hero ── */
   .hero {
+    position: relative;
+    z-index: 1;
     text-align: center;
     padding: 52px 24px 36px;
     border-bottom: 1px solid rgba(255,255,255,0.05);
   }
-
   .hero-tag {
     display: inline-block;
     background: var(--orange-dim);
@@ -96,7 +105,6 @@
     margin-bottom: 14px;
     text-transform: uppercase;
   }
-
   .hero h1 {
     font-family: 'Bebas Neue', sans-serif;
     font-size: clamp(38px, 9vw, 72px);
@@ -107,7 +115,6 @@
     -webkit-text-fill-color: transparent;
     background-clip: text;
   }
-
   .hero-sub {
     color: var(--muted);
     font-size: 12px;
@@ -116,7 +123,6 @@
     margin-top: 8px;
   }
 
-  /* ── Leagues played chips ── */
   .leagues-row {
     display: flex;
     justify-content: center;
@@ -124,7 +130,6 @@
     margin-top: 24px;
     flex-wrap: wrap;
   }
-
   .league-chip {
     font-size: 11px;
     font-weight: 700;
@@ -135,22 +140,30 @@
     color: var(--muted);
     background: var(--surface2);
   }
-
   .league-chip.active {
     background: var(--orange-dim);
     border-color: rgba(255,140,0,0.35);
     color: var(--orange-light);
   }
 
-  /* ── Season summary cards ── */
   .wrap {
     max-width: 1100px;
     margin: 0 auto;
     padding: 0 24px;
+    position: relative;
+    z-index: 1;
   }
 
-  .section {
-    margin-top: 48px;
+  .section { margin-top: 48px; animation: fadeUp 0.5s ease both; }
+  .section:nth-child(2) { animation-delay: 0.05s; }
+  .section:nth-child(3) { animation-delay: 0.1s; }
+  .section:nth-child(4) { animation-delay: 0.15s; }
+  .section:nth-child(5) { animation-delay: 0.20s; }
+  .section:nth-child(6) { animation-delay: 0.25s; }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
   }
 
   .section-header {
@@ -159,35 +172,30 @@
     gap: 14px;
     margin-bottom: 24px;
   }
-
   .section-title {
     font-family: 'Bebas Neue', sans-serif;
     font-size: 26px;
     letter-spacing: 4px;
     color: var(--text);
   }
-
   .section-sub {
     font-size: 11px;
     letter-spacing: 2px;
     color: var(--muted);
     text-transform: uppercase;
   }
-
   .section-line {
     flex: 1;
     height: 1px;
     background: linear-gradient(90deg, var(--border), transparent);
   }
 
-  /* ── Summary stat row ── */
   .summary-row {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
     gap: 12px;
     margin-bottom: 48px;
   }
-
   .s-card {
     background: var(--surface);
     border: 1px solid rgba(255,255,255,0.05);
@@ -197,7 +205,6 @@
     position: relative;
     overflow: hidden;
   }
-
   .s-card::before {
     content: '';
     position: absolute;
@@ -205,7 +212,6 @@
     height: 2px;
     background: linear-gradient(90deg, transparent, var(--orange), transparent);
   }
-
   .s-val {
     font-family: 'Bebas Neue', sans-serif;
     font-size: 34px;
@@ -213,7 +219,6 @@
     color: var(--orange-light);
     margin-bottom: 5px;
   }
-
   .s-lbl {
     font-size: 10px;
     letter-spacing: 2px;
@@ -221,17 +226,13 @@
     text-transform: uppercase;
   }
 
-  /* ── Charts grid ── */
   .charts-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 20px;
     margin-bottom: 20px;
   }
-
-  @media (max-width: 680px) {
-    .charts-grid { grid-template-columns: 1fr; }
-  }
+  @media (max-width: 680px) { .charts-grid { grid-template-columns: 1fr; } }
 
   .card {
     background: var(--surface);
@@ -241,7 +242,6 @@
     position: relative;
     overflow: hidden;
   }
-
   .card::before {
     content: '';
     position: absolute;
@@ -249,7 +249,6 @@
     height: 3px;
     background: linear-gradient(90deg, var(--orange), var(--orange-light));
   }
-
   .card.full { grid-column: 1 / -1; }
 
   .card-title {
@@ -265,12 +264,11 @@
 
   canvas { max-height: 300px; }
 
-  /* ── Leaderboard table ── */
+  /* ── Tables ── */
   .lb-table {
     width: 100%;
     border-collapse: collapse;
   }
-
   .lb-table th {
     text-align: left;
     font-size: 10px;
@@ -281,14 +279,12 @@
     text-transform: uppercase;
     white-space: nowrap;
   }
-
   .lb-table td {
     padding: 13px 12px;
     font-size: 14px;
     border-bottom: 1px solid rgba(255,255,255,0.03);
     vertical-align: middle;
   }
-
   .lb-table tr:last-child td { border-bottom: none; }
   .lb-table tr:hover td { background: rgba(255,140,0,0.04); }
 
@@ -299,32 +295,17 @@
     width: 36px;
     text-align: center;
   }
-
   .rank.top { color: var(--gold); }
-
   .player-name-cell { font-weight: 600; color: var(--text); }
-
   .num-cell {
     font-family: 'Bebas Neue', sans-serif;
     font-size: 20px;
     color: var(--orange-light);
   }
-
   .sr-cell { color: var(--muted); font-size: 13px; }
 
-  .inline-bar-wrap {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-  }
-
-  .inline-bar {
-    height: 5px;
-    border-radius: 3px;
-    background: var(--orange);
-    min-width: 4px;
-  }
-
+  .inline-bar-wrap { display: flex; align-items: center; gap: 8px; }
+  .inline-bar { height: 5px; border-radius: 3px; background: var(--orange); min-width: 4px; }
   .bar-label { font-size: 12px; color: var(--muted); white-space: nowrap; }
 
   .wick-badge {
@@ -337,37 +318,15 @@
     padding: 2px 10px;
     border-radius: 6px;
   }
+  .wick-badge.star { background: rgba(233,196,106,0.15); border-color: rgba(233,196,106,0.35); color: var(--gold); }
+  .wick-badge.zero { background: rgba(255,255,255,0.04); border-color: rgba(255,255,255,0.08); color: var(--muted); }
 
-  .wick-badge.star {
-    background: rgba(233,196,106,0.15);
-    border-color: rgba(233,196,106,0.35);
-    color: var(--gold);
-  }
-
-  .wick-badge.zero {
-    background: rgba(255,255,255,0.04);
-    border-color: rgba(255,255,255,0.08);
-    color: var(--muted);
-  }
-
-  .eco-cell {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    font-size: 13px;
-    color: var(--muted);
-  }
-
-  .eco-dot {
-    width: 8px; height: 8px;
-    border-radius: 50%;
-  }
-
+  .eco-cell { display: flex; align-items: center; gap: 6px; font-size: 13px; color: var(--muted); }
+  .eco-dot { width: 8px; height: 8px; border-radius: 50%; }
   .eco-dot.low { background: var(--green); }
   .eco-dot.med { background: var(--gold); }
   .eco-dot.high { background: var(--coral); }
 
-  /* ── Tag pills ── */
   .tag {
     display: inline-block;
     font-size: 10px;
@@ -379,21 +338,50 @@
     vertical-align: middle;
     margin-left: 6px;
   }
-
   .tag.mvp { background: rgba(233,196,106,0.2); color: var(--gold); }
   .tag.eco { background: rgba(74,222,128,0.15); color: var(--green); }
+  .tag.potm { background: rgba(233,196,106,0.25); color: var(--gold); border: 1px solid rgba(233,196,106,0.3); }
 
-  /* ── Footer ── */
-  footer {
-    text-align: center;
-    padding: 32px 24px 0;
-    color: var(--muted);
-    font-size: 11px;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    opacity: 0.5;
+  /* ── Rating table ── */
+  .rating-bar-wrap { display: flex; align-items: center; gap: 10px; }
+  .rating-bar-track {
+    flex: 1;
+    height: 6px;
+    border-radius: 3px;
+    background: rgba(255,255,255,0.06);
+    overflow: hidden;
+  }
+  .rating-bar-fill {
+    height: 100%;
+    border-radius: 3px;
+  }
+  .rating-val {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 20px;
+    white-space: nowrap;
   }
 
+  /* ── Match comparison section ── */
+  .match-compare-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 20px;
+  }
+  @media (max-width: 680px) { .match-compare-grid { grid-template-columns: 1fr; } }
+
+  .match-label {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    padding: 3px 10px;
+    border-radius: 10px;
+    margin-bottom: 12px;
+    text-transform: uppercase;
+  }
+  .lge1 { background: rgba(245,82,17,0.15); color: var(--orange-light); border: 1px solid rgba(245,82,17,0.3); }
+  .lge2 { background: rgba(233,196,106,0.15); color: var(--gold); border: 1px solid rgba(233,196,106,0.3); }
 
   footer {
     position: relative;
@@ -405,49 +393,30 @@
     align-items: center;
     justify-content: center;
     gap: 12px;
+    margin-top: 40px;
   }
-  footer img {
-    width: 28px; height: 28px;
-    object-fit: contain;
-    border-radius: 50%;
-    opacity: 0.6;
-  }
-  footer span {
-    font-size: 12px;
-    letter-spacing: 2px;
-    color: var(--muted);
-    text-transform: uppercase;
-  }
-
-  /* ── Animations ── */
-  .section { animation: fadeUp 0.5s ease both; }
-  .section:nth-child(2) { animation-delay: 0.05s; }
-  .section:nth-child(3) { animation-delay: 0.1s; }
-  .section:nth-child(4) { animation-delay: 0.15s; }
-
-  @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(20px); }
-    to   { opacity: 1; transform: translateY(0); }
-  }
+  footer img { width: 28px; height: 28px; object-fit: contain; border-radius: 50%; opacity: 0.6; }
+  footer span { font-size: 12px; letter-spacing: 2px; color: var(--muted); text-transform: uppercase; }
 </style>
 </head>
 <body>
 
-<!-- TOP NAV -->
+<div class="orb orb-1"></div>
+<div class="orb orb-2"></div>
+
 <nav class="topnav">
   <a href="./index.html" class="nav-back">← Dashboard</a>
-  <div class="nav-title">Fearlerss 11s Tournament - Season 4 Stats</div>
+  <div class="nav-title">Fearless 11s Tournament - Season 4 Stats</div>
   <img src="./logo.png" alt="Logo" class="nav-logo">
 </nav>
 
-<!-- HERO -->
 <header class="hero">
   <div class="hero-tag">Rising Stars CC · 2026</div>
   <h1>Overall Season Stats</h1>
   <p class="hero-sub">Cumulative Performance Across All Leagues</p>
   <div class="leagues-row">
-    <div class="league-chip active">LGE 1 — vs Phoenix X1 ✓</div>
-    <div class="league-chip">LGE 2</div>
+    <div class="league-chip active">LGE 1 — vs Phoenix X1 ✓ WON</div>
+    <div class="league-chip active">LGE 2 — vs Rayan Rockers ✓ WON</div>
     <div class="league-chip">LGE 3</div>
     <div class="league-chip">LGE 4</div>
     <div class="league-chip">LGE 5</div>
@@ -456,185 +425,188 @@
 
 <div class="wrap">
 
-  <!-- SEASON SUMMARY -->
+  <!-- ── SEASON AT A GLANCE ── -->
   <div class="section">
     <div class="section-header">
       <div class="section-title">Season At a Glance</div>
       <div class="section-line"></div>
-      <div class="section-sub">1 match played</div>
+      <div class="section-sub">2 matches played</div>
     </div>
     <div class="summary-row">
-      <div class="s-card"><div class="s-val">1</div><div class="s-lbl">Matches</div></div>
-      <div class="s-card"><div class="s-val">177</div><div class="s-lbl">Total Runs</div></div>
-      <div class="s-card"><div class="s-val">157</div><div class="s-lbl">Bat Runs</div></div>
-      <div class="s-card"><div class="s-val">20</div><div class="s-lbl">Extras</div></div>
-      <div class="s-card"><div class="s-val">10.4</div><div class="s-lbl">Run Rate</div></div>
-      <div class="s-card"><div class="s-val">10</div><div class="s-lbl">Wkts Taken</div></div>
-      <div class="s-card"><div class="s-val">49</div><div class="s-lbl">Top Score</div></div>
+      <div class="s-card"><div class="s-val">2</div><div class="s-lbl">Matches</div></div>
+      <div class="s-card"><div class="s-val">2</div><div class="s-lbl">Won</div></div>
+      <div class="s-card"><div class="s-val">360</div><div class="s-lbl">Total Runs</div></div>
+      <div class="s-card"><div class="s-val">321</div><div class="s-lbl">Bat Runs</div></div>
+      <div class="s-card"><div class="s-val">38</div><div class="s-lbl">Extras</div></div>
+      <div class="s-card"><div class="s-val">10.6</div><div class="s-lbl">Avg Run Rate</div></div>
+      <div class="s-card"><div class="s-val">15</div><div class="s-lbl">Wkts Taken</div></div>
+      <div class="s-card"><div class="s-val">81⭐</div><div class="s-lbl">Top Score</div></div>
       <div class="s-card"><div class="s-val">6⭐</div><div class="s-lbl">Best Bowling</div></div>
+      <div class="s-card"><div class="s-val">24</div><div class="s-lbl">4s Hit</div></div>
+      <div class="s-card"><div class="s-val">16</div><div class="s-lbl">6s Hit</div></div>
     </div>
   </div>
 
-  <!-- BATTING SECTION -->
+  <!-- ── MATCH COMPARISON ── -->
   <div class="section">
     <div class="section-header">
-      <div class="section-title">🏏 Batting</div>
+      <div class="section-title">⚔️ Match Comparison</div>
+      <div class="section-line"></div>
+    </div>
+    <div class="match-compare-grid">
+      <div class="card">
+        <div class="match-label lge1">League 1 · vs Phoenix X1</div>
+        <table class="lb-table">
+          <tr><td style="color:var(--muted);font-size:12px;">Score</td><td class="num-cell">177/6</td></tr>
+          <tr><td style="color:var(--muted);font-size:12px;">Overs</td><td>17.0</td></tr>
+          <tr><td style="color:var(--muted);font-size:12px;">Run Rate</td><td>10.4</td></tr>
+          <tr><td style="color:var(--muted);font-size:12px;">Extras</td><td>20</td></tr>
+          <tr><td style="color:var(--muted);font-size:12px;">Wickets Taken</td><td>10</td></tr>
+          <tr><td style="color:var(--muted);font-size:12px;">Result</td><td style="color:var(--green);font-weight:700;">Won by 94 runs</td></tr>
+          <tr><td style="color:var(--muted);font-size:12px;">POTM</td><td>Sanjay (6/23)</td></tr>
+        </table>
+      </div>
+      <div class="card">
+        <div class="match-label lge2">League 2 · vs Rayan Rockers</div>
+        <table class="lb-table">
+          <tr><td style="color:var(--muted);font-size:12px;">Score</td><td class="num-cell">183/9</td></tr>
+          <tr><td style="color:var(--muted);font-size:12px;">Overs</td><td>17.0</td></tr>
+          <tr><td style="color:var(--muted);font-size:12px;">Run Rate</td><td>10.8</td></tr>
+          <tr><td style="color:var(--muted);font-size:12px;">Extras</td><td>18</td></tr>
+          <tr><td style="color:var(--muted);font-size:12px;">Wickets Taken</td><td>5</td></tr>
+          <tr><td style="color:var(--muted);font-size:12px;">Result</td><td style="color:var(--green);font-weight:700;">Won by 11 runs</td></tr>
+          <tr><td style="color:var(--muted);font-size:12px;">POTM</td><td>Adithya (81 runs)</td></tr>
+        </table>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title">📊 Score & Run Rate Comparison</div>
+      <canvas id="matchCompareChart" style="max-height:220px;"></canvas>
+    </div>
+  </div>
+
+  <!-- ── BATTING ── -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-title">🏏 Batting — Combined</div>
       <div class="section-line"></div>
     </div>
 
-    <!-- Batting leaderboard -->
     <div class="card" style="margin-bottom:20px;">
-      <div class="card-title">🏆 Run Scorers Leaderboard</div>
+      <div class="card-title">🏆 Run Scorers Leaderboard (2 Matches)</div>
+      <div style="overflow-x:auto;">
       <table class="lb-table">
         <thead>
           <tr>
             <th>#</th>
             <th>Player</th>
+            <th>M</th>
             <th>Runs</th>
             <th>Balls</th>
             <th>SR</th>
             <th>4s</th>
             <th>6s</th>
+            <th>HS</th>
             <th>Share</th>
           </tr>
         </thead>
         <tbody>
+          <!-- Adithya: L1=6(9), L2=81(38) → 87 runs, 47 balls, SR=185.1, 4s=5, 6s=7, HS=81 -->
           <tr>
             <td class="rank top">1</td>
-            <td class="player-name-cell">Velu V (C) <span class="tag mvp">MVP</span></td>
-            <td class="num-cell">49</td>
-            <td>27</td>
-            <td class="sr-cell">181.5</td>
-            <td>6</td>
-            <td>2</td>
-            <td>
-              <div class="inline-bar-wrap">
-                <div class="inline-bar" style="width:90px"></div>
-                <span class="bar-label">31.2%</span>
-              </div>
-            </td>
+            <td class="player-name-cell">Adithya <span class="tag potm">POTM L2</span></td>
+            <td>2</td><td class="num-cell">87</td><td>47</td>
+            <td class="sr-cell">185.1</td><td>5</td><td>7</td><td>81</td>
+            <td><div class="inline-bar-wrap"><div class="inline-bar" style="width:108px"></div><span class="bar-label">27.1%</span></div></td>
           </tr>
+          <!-- Ayyanar: L1=48(34), L2=0(1) → 48, 35b, SR=137.1, 4s=5, 6s=2, HS=48 -->
           <tr>
             <td class="rank top">2</td>
             <td class="player-name-cell">Ayyanar</td>
-            <td class="num-cell">48</td>
-            <td>34</td>
-            <td class="sr-cell">141.2</td>
-            <td>5</td>
-            <td>2</td>
-            <td>
-              <div class="inline-bar-wrap">
-                <div class="inline-bar" style="width:88px"></div>
-                <span class="bar-label">30.6%</span>
-              </div>
-            </td>
+            <td>2</td><td class="num-cell">48</td><td>35</td>
+            <td class="sr-cell">137.1</td><td>5</td><td>2</td><td>48</td>
+            <td><div class="inline-bar-wrap"><div class="inline-bar" style="width:60px"></div><span class="bar-label">15.0%</span></div></td>
           </tr>
+          <!-- Velu V: L1=49(27), L2=6(5) → 55, 32b, SR=171.9, 4s=6, 6s=3, HS=49 -->
           <tr>
-            <td class="rank">3</td>
-            <td class="player-name-cell">Cahill V</td>
-            <td class="num-cell">20*</td>
-            <td>9</td>
-            <td class="sr-cell">222.2</td>
-            <td>3</td>
-            <td>1</td>
-            <td>
-              <div class="inline-bar-wrap">
-                <div class="inline-bar" style="width:37px"></div>
-                <span class="bar-label">12.7%</span>
-              </div>
-            </td>
+            <td class="rank top">3</td>
+            <td class="player-name-cell">Velu V (C)</td>
+            <td>2</td><td class="num-cell">55</td><td>32</td>
+            <td class="sr-cell">171.9</td><td>6</td><td>3</td><td>49</td>
+            <td><div class="inline-bar-wrap"><div class="inline-bar" style="width:68px"></div><span class="bar-label">17.1%</span></div></td>
           </tr>
+          <!-- Setti: L1=18(11), L2=19(12) → 37, 23b, SR=160.9, 4s=4, 6s=2, HS=19 -->
           <tr>
             <td class="rank">4</td>
             <td class="player-name-cell">Setti</td>
-            <td class="num-cell">18</td>
-            <td>11</td>
-            <td class="sr-cell">163.6</td>
-            <td>1</td>
-            <td>1</td>
-            <td>
-              <div class="inline-bar-wrap">
-                <div class="inline-bar" style="width:33px"></div>
-                <span class="bar-label">11.5%</span>
-              </div>
-            </td>
+            <td>2</td><td class="num-cell">37</td><td>23</td>
+            <td class="sr-cell">160.9</td><td>4</td><td>2</td><td>19</td>
+            <td><div class="inline-bar-wrap"><div class="inline-bar" style="width:46px"></div><span class="bar-label">11.5%</span></div></td>
           </tr>
+          <!-- Naveen: L1=DNB, L2=18(13) → 18, 13b, SR=138.5, 4s=2, 6s=1 -->
           <tr>
             <td class="rank">5</td>
-            <td class="player-name-cell">Sathish R</td>
-            <td class="num-cell">13</td>
-            <td>12</td>
-            <td class="sr-cell">108.3</td>
-            <td>2</td>
-            <td>0</td>
-            <td>
-              <div class="inline-bar-wrap">
-                <div class="inline-bar" style="width:24px"></div>
-                <span class="bar-label">8.3%</span>
-              </div>
-            </td>
+            <td class="player-name-cell">Naveen</td>
+            <td>1</td><td class="num-cell">18</td><td>13</td>
+            <td class="sr-cell">138.5</td><td>2</td><td>1</td><td>18</td>
+            <td><div class="inline-bar-wrap"><div class="inline-bar" style="width:22px"></div><span class="bar-label">5.6%</span></div></td>
           </tr>
+          <!-- Alagarasan: L2 only=17(14) -->
           <tr>
             <td class="rank">6</td>
-            <td class="player-name-cell">Adithya</td>
-            <td class="num-cell">6</td>
-            <td>9</td>
-            <td class="sr-cell">66.7</td>
-            <td>1</td>
-            <td>0</td>
-            <td>
-              <div class="inline-bar-wrap">
-                <div class="inline-bar" style="width:11px; background:#e76f51"></div>
-                <span class="bar-label">3.8%</span>
-              </div>
-            </td>
+            <td class="player-name-cell">Alagarasan</td>
+            <td>1</td><td class="num-cell">17</td><td>14</td>
+            <td class="sr-cell">121.4</td><td>3</td><td>0</td><td>17</td>
+            <td><div class="inline-bar-wrap"><div class="inline-bar" style="width:21px"></div><span class="bar-label">5.3%</span></div></td>
           </tr>
+          <!-- Cahill V: L1=20*(9), L2=12(12) → 32, 21b, SR=152.4, 4s=4, 6s=1 -->
           <tr>
             <td class="rank">7</td>
-            <td class="player-name-cell">Vishnu</td>
-            <td class="num-cell">2</td>
-            <td>1</td>
-            <td class="sr-cell">200.0</td>
-            <td>0</td>
-            <td>0</td>
-            <td>
-              <div class="inline-bar-wrap">
-                <div class="inline-bar" style="width:4px; background:#e76f51"></div>
-                <span class="bar-label">1.3%</span>
-              </div>
-            </td>
+            <td class="player-name-cell">Cahill V</td>
+            <td>2</td><td class="num-cell">32</td><td>21</td>
+            <td class="sr-cell">152.4</td><td>4</td><td>1</td><td>20*</td>
+            <td><div class="inline-bar-wrap"><div class="inline-bar" style="width:40px"></div><span class="bar-label">10.0%</span></div></td>
           </tr>
+          <!-- Vishnu: L1=2(1), L2=12(4) → 14, 5b, SR=280.0, 4s=3, 6s=0 -->
           <tr>
             <td class="rank">8</td>
+            <td class="player-name-cell">Vishnu</td>
+            <td>2</td><td class="num-cell">14</td><td>5</td>
+            <td class="sr-cell">280.0</td><td>3</td><td>0</td><td>12</td>
+            <td><div class="inline-bar-wrap"><div class="inline-bar" style="width:17px"></div><span class="bar-label">4.4%</span></div></td>
+          </tr>
+          <!-- Sathish R: L1=13(12), L2=0*(1) → 13, 13b, SR=100.0 -->
+          <tr>
+            <td class="rank">9</td>
+            <td class="player-name-cell">Sathish R</td>
+            <td>2</td><td class="num-cell">13</td><td>13</td>
+            <td class="sr-cell">100.0</td><td>2</td><td>0</td><td>13</td>
+            <td><div class="inline-bar-wrap"><div class="inline-bar" style="width:16px"></div><span class="bar-label">4.0%</span></div></td>
+          </tr>
+          <!-- Kumar: L1=1*(2) only -->
+          <tr>
+            <td class="rank">10</td>
             <td class="player-name-cell">Kumar</td>
-            <td class="num-cell">1*</td>
-            <td>2</td>
-            <td class="sr-cell">50.0</td>
-            <td>0</td>
-            <td>0</td>
-            <td>
-              <div class="inline-bar-wrap">
-                <div class="inline-bar" style="width:2px; background:#e76f51"></div>
-                <span class="bar-label">0.6%</span>
-              </div>
-            </td>
+            <td>1</td><td class="num-cell">1*</td><td>2</td>
+            <td class="sr-cell">50.0</td><td>0</td><td>0</td><td>1*</td>
+            <td><div class="inline-bar-wrap"><div class="inline-bar" style="width:2px;background:#e76f51"></div><span class="bar-label">0.3%</span></div></td>
           </tr>
         </tbody>
       </table>
+      </div>
     </div>
 
-    <!-- Batting charts -->
     <div class="charts-grid">
       <div class="card">
-        <div class="card-title">📊 Runs Scored</div>
+        <div class="card-title">📊 Total Runs (Combined)</div>
         <canvas id="runsChart"></canvas>
       </div>
       <div class="card">
-        <div class="card-title">⚡ Strike Rate</div>
+        <div class="card-title">⚡ Career Strike Rate</div>
         <canvas id="srChart"></canvas>
       </div>
       <div class="card">
-        <div class="card-title">🎯 Boundaries (4s & 6s)</div>
+        <div class="card-title">🎯 Boundaries — 4s & 6s</div>
         <canvas id="boundaryChart"></canvas>
       </div>
       <div class="card">
@@ -642,118 +614,120 @@
         <canvas id="ballsChart"></canvas>
       </div>
       <div class="card full">
-        <div class="card-title">🥧 Run Contribution Share</div>
-        <canvas id="pieChart" style="max-height:280px;"></canvas>
+        <div class="card-title">🥧 Run Contribution Share (321 bat runs + 38 extras)</div>
+        <canvas id="pieChart" style="max-height:300px;"></canvas>
+      </div>
+      <!-- Per-match runs breakdown -->
+      <div class="card full">
+        <div class="card-title">📈 Per-Match Runs Breakdown</div>
+        <canvas id="perMatchRunsChart" style="max-height:280px;"></canvas>
       </div>
     </div>
   </div>
 
-  <!-- BOWLING SECTION -->
+  <!-- ── BOWLING ── -->
   <div class="section">
     <div class="section-header">
-      <div class="section-title">🎳 Bowling</div>
+      <div class="section-title">🎳 Bowling — Combined</div>
       <div class="section-line"></div>
     </div>
 
-    <!-- Bowling leaderboard -->
     <div class="card" style="margin-bottom:20px;">
-      <div class="card-title">🏆 Bowling Leaderboard</div>
+      <div class="card-title">🏆 Bowling Leaderboard (2 Matches)</div>
+      <div style="overflow-x:auto;">
       <table class="lb-table">
         <thead>
           <tr>
             <th>#</th>
             <th>Bowler</th>
-            <th>O</th>
-            <th>R</th>
-            <th>W</th>
+            <th>M</th>
+            <th>Overs</th>
+            <th>Runs</th>
+            <th>Wkts</th>
             <th>Economy</th>
-            <th>Dot %</th>
+            <th>Dots</th>
+            <th>Wides</th>
+            <th>NB</th>
           </tr>
         </thead>
         <tbody>
+          <!-- Sanjay: L1=4ov,23r,6w,14d,1wd,0nb; L2=DNB → totals -->
           <tr>
             <td class="rank top">1</td>
             <td class="player-name-cell">Sanjay ⭐ <span class="tag mvp">6-fer</span></td>
-            <td>4.0</td>
-            <td>23</td>
+            <td>1</td><td>4.0</td><td>23</td>
             <td><span class="wick-badge star">6</span></td>
-            <td>
-              <div class="eco-cell">
-                <div class="eco-dot low"></div> 5.75
-              </div>
-            </td>
-            <td>—</td>
+            <td><div class="eco-cell"><div class="eco-dot low"></div> 5.75</div></td>
+            <td>14</td><td>1</td><td>0</td>
           </tr>
+          <!-- Setti: L1=1ov,6r,0w,5d; L2=4ov,29r,2w,16d,3wd → 5ov,35r,2w,21d,3wd -->
           <tr>
-            <td class="rank">2</td>
-            <td class="player-name-cell">Cahill V <span class="tag eco">Eco</span></td>
-            <td>2.0</td>
-            <td>12</td>
-            <td><span class="wick-badge">1</span></td>
-            <td>
-              <div class="eco-cell">
-                <div class="eco-dot low"></div> 6.00
-              </div>
-            </td>
-            <td>—</td>
+            <td class="rank top">2</td>
+            <td class="player-name-cell">Setti <span class="tag eco">All-round</span></td>
+            <td>2</td><td>5.0</td><td>35</td>
+            <td><span class="wick-badge">2</span></td>
+            <td><div class="eco-cell"><div class="eco-dot low"></div> 7.0</div></td>
+            <td>21</td><td>3</td><td>0</td>
           </tr>
+          <!-- Alagarasan: L2=4ov,26r,1w,13d,0wd -->
           <tr>
             <td class="rank">3</td>
-            <td class="player-name-cell">Rithull V</td>
-            <td>0.1</td>
-            <td>0</td>
+            <td class="player-name-cell">Alagarasan <span class="tag eco">Eco</span></td>
+            <td>1</td><td>4.0</td><td>26</td>
             <td><span class="wick-badge">1</span></td>
-            <td>
-              <div class="eco-cell">
-                <div class="eco-dot low"></div> 0.00
-              </div>
-            </td>
-            <td>—</td>
+            <td><div class="eco-cell"><div class="eco-dot low"></div> 6.5</div></td>
+            <td>13</td><td>0</td><td>0</td>
           </tr>
+          <!-- Cahill V: L1=2ov,12r,1w,8d -->
           <tr>
             <td class="rank">4</td>
-            <td class="player-name-cell">Adithya</td>
-            <td>2.0</td>
-            <td>17</td>
+            <td class="player-name-cell">Cahill V</td>
+            <td>1</td><td>2.0</td><td>12</td>
             <td><span class="wick-badge">1</span></td>
-            <td>
-              <div class="eco-cell">
-                <div class="eco-dot med"></div> 8.50
-              </div>
-            </td>
-            <td>—</td>
+            <td><div class="eco-cell"><div class="eco-dot low"></div> 6.0</div></td>
+            <td>8</td><td>0</td><td>0</td>
           </tr>
+          <!-- Adithya: L1=2ov,17r,1w,6d,3wd; L2=2ov,36r,0w,3d,0wd,2nb → 4ov,53r,1w,9d,3wd,2nb -->
           <tr>
             <td class="rank">5</td>
-            <td class="player-name-cell">Jijo</td>
-            <td>2.0</td>
-            <td>21</td>
+            <td class="player-name-cell">Adithya</td>
+            <td>2</td><td>4.0</td><td>53</td>
             <td><span class="wick-badge">1</span></td>
-            <td>
-              <div class="eco-cell">
-                <div class="eco-dot high"></div> 10.50
-              </div>
-            </td>
-            <td>—</td>
+            <td><div class="eco-cell"><div class="eco-dot high"></div> 13.25</div></td>
+            <td>9</td><td>3</td><td>2</td>
           </tr>
+          <!-- Jijo: L1=2ov,21r,1w,4d,3wd; L2=2ov,23r,1w,5d,1wd → 4ov,44r,2w,9d,4wd -->
           <tr>
             <td class="rank">6</td>
-            <td class="player-name-cell">Setti</td>
-            <td>1.0</td>
-            <td>6</td>
-            <td><span class="wick-badge zero">0</span></td>
-            <td>
-              <div class="eco-cell">
-                <div class="eco-dot low"></div> 6.00
-              </div>
-            </td>
-            <td>—</td>
+            <td class="player-name-cell">Jijo</td>
+            <td>2</td><td>4.0</td><td>44</td>
+            <td><span class="wick-badge">2</span></td>
+            <td><div class="eco-cell"><div class="eco-dot high"></div> 11.0</div></td>
+            <td>9</td><td>4</td><td>0</td>
+          </tr>
+          <!-- Ayyanar: L2=3ov,26r,1w,10d,6wd -->
+          <tr>
+            <td class="rank">7</td>
+            <td class="player-name-cell">Ayyanar</td>
+            <td>1</td><td>3.0</td><td>26</td>
+            <td><span class="wick-badge">1</span></td>
+            <td><div class="eco-cell"><div class="eco-dot med"></div> 8.67</div></td>
+            <td>10</td><td>6</td><td>0</td>
+          </tr>
+          <!-- Rithull V: L1=0.1ov,0r,1w,1d -->
+          <tr>
+            <td class="rank">8</td>
+            <td class="player-name-cell">Rithull V</td>
+            <td>1</td><td>0.1</td><td>0</td>
+            <td><span class="wick-badge">1</span></td>
+            <td><div class="eco-cell"><div class="eco-dot low"></div> 0.0</div></td>
+            <td>1</td><td>0</td><td>0</td>
           </tr>
         </tbody>
       </table>
+      </div>
     </div>
 
-    <!-- Bowling charts -->
     <div class="charts-grid">
       <div class="card">
         <div class="card-title">🎯 Wickets Taken</div>
@@ -771,6 +745,264 @@
         <div class="card-title">🔢 Runs Conceded</div>
         <canvas id="runsConcededChart"></canvas>
       </div>
+      <div class="card">
+        <div class="card-title">⚫ Dot Balls Bowled</div>
+        <canvas id="dotChart"></canvas>
+      </div>
+      <div class="card">
+        <div class="card-title">⚠️ Wides &amp; No-Balls</div>
+        <canvas id="widesChart"></canvas>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── PLAYER PERFORMANCE RATINGS ── -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-title">⭐ Player Performance Ratings</div>
+      <div class="section-line"></div>
+      <div class="section-sub">Combined — 2 matches</div>
+    </div>
+
+    <div class="card" style="margin-bottom:20px;">
+      <div class="card-title">📋 Combined Performance Ratings Table</div>
+      <p style="font-size:12px;color:var(--muted);margin-bottom:18px;">Ratings averaged across matches played. Players rated per match then averaged. ⭐ = POTM in a match.</p>
+      <div style="overflow-x:auto;">
+      <table class="lb-table">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Player</th>
+            <th>M</th>
+            <th>LGE 1 Rating</th>
+            <th>LGE 2 Rating</th>
+            <th>Avg Rating</th>
+            <th>Key Contribution</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Adithya: L1=6/10, L2=10/10 → avg 8.0 -->
+          <tr style="background:rgba(233,196,106,0.04);">
+            <td class="rank top">1</td>
+            <td class="player-name-cell">Adithya ⭐ <span class="tag potm">POTM L2</span></td>
+            <td>2</td>
+            <td><span style="font-family:'Bebas Neue',sans-serif;font-size:18px;color:var(--orange-light);">6/10</span></td>
+            <td><span style="font-family:'Bebas Neue',sans-serif;font-size:18px;color:var(--gold);">10/10</span></td>
+            <td>
+              <div class="rating-bar-wrap">
+                <div class="rating-bar-track"><div class="rating-bar-fill" style="width:80%;background:var(--gold);"></div></div>
+                <span class="rating-val" style="color:var(--gold);">8.0</span>
+              </div>
+            </td>
+            <td style="font-size:12px;color:var(--green);">Match-winning 81 in L2. Consistent presence across matches. Explosive finisher.</td>
+          </tr>
+          <!-- Sanjay: L1=10/10, L2=DNP → 10.0 (1 match) -->
+          <tr style="background:rgba(233,196,106,0.04);">
+            <td class="rank top">2</td>
+            <td class="player-name-cell">Sanjay ⭐ <span class="tag potm">POTM L1</span></td>
+            <td>1</td>
+            <td><span style="font-family:'Bebas Neue',sans-serif;font-size:18px;color:var(--gold);">10/10</span></td>
+            <td style="color:var(--muted);font-size:12px;">DNP</td>
+            <td>
+              <div class="rating-bar-wrap">
+                <div class="rating-bar-track"><div class="rating-bar-fill" style="width:100%;background:var(--gold);"></div></div>
+                <span class="rating-val" style="color:var(--gold);">10.0</span>
+              </div>
+            </td>
+            <td style="font-size:12px;color:var(--green);">6/23 match-winning spell. Single-handedly dismantled Phoenix X1 lineup.</td>
+          </tr>
+          <!-- Velu V: L1=9.5, L2=6.5 → avg 8.0 -->
+          <tr>
+            <td class="rank">3</td>
+            <td class="player-name-cell">Velu V (C)</td>
+            <td>2</td>
+            <td><span style="font-family:'Bebas Neue',sans-serif;font-size:18px;color:var(--gold);">9.5/10</span></td>
+            <td><span style="font-family:'Bebas Neue',sans-serif;font-size:18px;color:var(--orange-light);">6.5/10</span></td>
+            <td>
+              <div class="rating-bar-wrap">
+                <div class="rating-bar-track"><div class="rating-bar-fill" style="width:80%;background:var(--gold);"></div></div>
+                <span class="rating-val" style="color:var(--gold);">8.0</span>
+              </div>
+            </td>
+            <td style="font-size:12px;color:var(--green);">49 + 6 catches in L1 (star all-rounder). 3 more catches in L2. Elite captain & fielder.</td>
+          </tr>
+          <!-- Setti: L1=7.5, L2=8.5 → avg 8.0 -->
+          <tr>
+            <td class="rank">4</td>
+            <td class="player-name-cell">Setti</td>
+            <td>2</td>
+            <td><span style="font-family:'Bebas Neue',sans-serif;font-size:18px;color:var(--gold);">7.5/10</span></td>
+            <td><span style="font-family:'Bebas Neue',sans-serif;font-size:18px;color:var(--gold);">8.5/10</span></td>
+            <td>
+              <div class="rating-bar-wrap">
+                <div class="rating-bar-track"><div class="rating-bar-fill" style="width:80%;background:var(--gold);"></div></div>
+                <span class="rating-val" style="color:var(--gold);">8.0</span>
+              </div>
+            </td>
+            <td style="font-size:12px;color:var(--green);">Most consistent all-rounder. Contributes every match with bat, ball & field.</td>
+          </tr>
+          <!-- Alagarasan: L2=8.0 only (DNP L1) -->
+          <tr>
+            <td class="rank">5</td>
+            <td class="player-name-cell">Alagarasan</td>
+            <td>1</td>
+            <td style="color:var(--muted);font-size:12px;">DNP</td>
+            <td><span style="font-family:'Bebas Neue',sans-serif;font-size:18px;color:var(--orange-light);">8/10</span></td>
+            <td>
+              <div class="rating-bar-wrap">
+                <div class="rating-bar-track"><div class="rating-bar-fill" style="width:80%;background:var(--orange-light);"></div></div>
+                <span class="rating-val" style="color:var(--orange-light);">8.0</span>
+              </div>
+            </td>
+            <td style="font-size:12px;color:var(--green);">Maiden over bowled, most economical in L2. Complete game — bat, ball, run-out.</td>
+          </tr>
+          <!-- Ayyanar: L1=8.5, L2=5.5 → avg 7.0 -->
+          <tr>
+            <td class="rank">6</td>
+            <td class="player-name-cell">Ayyanar</td>
+            <td>2</td>
+            <td><span style="font-family:'Bebas Neue',sans-serif;font-size:18px;color:var(--gold);">8.5/10</span></td>
+            <td><span style="font-family:'Bebas Neue',sans-serif;font-size:18px;color:var(--orange-light);">5.5/10</span></td>
+            <td>
+              <div class="rating-bar-wrap">
+                <div class="rating-bar-track"><div class="rating-bar-fill" style="width:70%;background:var(--orange-light);"></div></div>
+                <span class="rating-val" style="color:var(--orange-light);">7.0</span>
+              </div>
+            </td>
+            <td style="font-size:12px;color:var(--orange-light);">Brilliant 48 in L1. Duck in L2 but got a wicket bowling. High ceiling player.</td>
+          </tr>
+          <!-- Cahill V: L1=8.0, L2=5.5 → avg 6.75 -->
+          <tr>
+            <td class="rank">7</td>
+            <td class="player-name-cell">Cahill V</td>
+            <td>2</td>
+            <td><span style="font-family:'Bebas Neue',sans-serif;font-size:18px;color:var(--orange-light);">8/10</span></td>
+            <td><span style="font-family:'Bebas Neue',sans-serif;font-size:18px;color:var(--orange-light);">5.5/10</span></td>
+            <td>
+              <div class="rating-bar-wrap">
+                <div class="rating-bar-track"><div class="rating-bar-fill" style="width:68%;background:var(--orange-light);"></div></div>
+                <span class="rating-val" style="color:var(--orange-light);">6.75</span>
+              </div>
+            </td>
+            <td style="font-size:12px;color:var(--orange-light);">Explosive finisher in L1 (20* off 9). Steady in L2 but SR dipped. Quality player.</td>
+          </tr>
+          <!-- Naveen: L1=5.0, L2=7.0 → avg 6.0 -->
+          <tr>
+            <td class="rank">8</td>
+            <td class="player-name-cell">Naveen</td>
+            <td>2</td>
+            <td><span style="font-family:'Bebas Neue',sans-serif;font-size:18px;color:var(--muted);">5/10</span></td>
+            <td><span style="font-family:'Bebas Neue',sans-serif;font-size:18px;color:var(--orange-light);">7/10</span></td>
+            <td>
+              <div class="rating-bar-wrap">
+                <div class="rating-bar-track"><div class="rating-bar-fill" style="width:60%;background:var(--orange-light);"></div></div>
+                <span class="rating-val" style="color:var(--orange-light);">6.0</span>
+              </div>
+            </td>
+            <td style="font-size:12px;color:var(--orange-light);">Improved from L1 (catch only) to a quality 18-run cameo in L2. Rising form.</td>
+          </tr>
+          <!-- Jijo: L1=6.0, L2=6.0 → avg 6.0 -->
+          <tr>
+            <td class="rank">9</td>
+            <td class="player-name-cell">Jijo</td>
+            <td>2</td>
+            <td><span style="font-family:'Bebas Neue',sans-serif;font-size:18px;color:var(--orange-light);">6/10</span></td>
+            <td><span style="font-family:'Bebas Neue',sans-serif;font-size:18px;color:var(--orange-light);">6/10</span></td>
+            <td>
+              <div class="rating-bar-wrap">
+                <div class="rating-bar-track"><div class="rating-bar-fill" style="width:60%;background:var(--orange-light);"></div></div>
+                <span class="rating-val" style="color:var(--orange-light);">6.0</span>
+              </div>
+            </td>
+            <td style="font-size:12px;color:var(--coral);">Consistent economy concern across both matches. 2 wickets in 4 overs but expensive. Wides an issue.</td>
+          </tr>
+          <!-- Vishnu: L1=N/A(batted), L2=7 → using available matches -->
+          <tr>
+            <td class="rank">10</td>
+            <td class="player-name-cell">Vishnu</td>
+            <td>2</td>
+            <td style="color:var(--muted);font-size:12px;">—</td>
+            <td><span style="font-family:'Bebas Neue',sans-serif;font-size:18px;color:var(--orange-light);">7/10</span></td>
+            <td>
+              <div class="rating-bar-wrap">
+                <div class="rating-bar-track"><div class="rating-bar-fill" style="width:57%;background:var(--orange-light);"></div></div>
+                <span class="rating-val" style="color:var(--orange-light);">5.75</span>
+              </div>
+            </td>
+            <td style="font-size:12px;color:var(--orange-light);">SR of 280 combined (14 runs off 5 balls). Explosive cameos. High impact when in.</td>
+          </tr>
+          <!-- Sathish R: L1=5.5, L2=4.0 → avg 4.75 -->
+          <tr>
+            <td class="rank">11</td>
+            <td class="player-name-cell">Sathish R</td>
+            <td>2</td>
+            <td><span style="font-family:'Bebas Neue',sans-serif;font-size:18px;color:var(--orange-light);">5.5/10</span></td>
+            <td><span style="font-family:'Bebas Neue',sans-serif;font-size:18px;color:var(--muted);">4/10</span></td>
+            <td>
+              <div class="rating-bar-wrap">
+                <div class="rating-bar-track"><div class="rating-bar-fill" style="width:47%;background:var(--muted);"></div></div>
+                <span class="rating-val" style="color:var(--muted);">4.75</span>
+              </div>
+            </td>
+            <td style="font-size:12px;color:var(--muted);">Only 13 runs in 2 matches. Comes in late and rarely gets a chance to contribute.</td>
+          </tr>
+          <!-- Rithull V: L1=5.5, DNP L2 → 5.5 -->
+          <tr>
+            <td class="rank">12</td>
+            <td class="player-name-cell">Rithull V</td>
+            <td>1</td>
+            <td><span style="font-family:'Bebas Neue',sans-serif;font-size:18px;color:var(--orange-light);">5.5/10</span></td>
+            <td style="color:var(--muted);font-size:12px;">DNP</td>
+            <td>
+              <div class="rating-bar-wrap">
+                <div class="rating-bar-track"><div class="rating-bar-fill" style="width:55%;background:var(--orange-light);"></div></div>
+                <span class="rating-val" style="color:var(--orange-light);">5.5</span>
+              </div>
+            </td>
+            <td style="font-size:12px;color:var(--orange-light);">1 ball, 1 wicket — sealed L1 with perfect economy.</td>
+          </tr>
+          <!-- Kumar: L1=4.0 only -->
+          <tr>
+            <td class="rank">13</td>
+            <td class="player-name-cell">Kumar</td>
+            <td>1</td>
+            <td><span style="font-family:'Bebas Neue',sans-serif;font-size:18px;color:var(--muted);">4/10</span></td>
+            <td style="color:var(--muted);font-size:12px;">DNP</td>
+            <td>
+              <div class="rating-bar-wrap">
+                <div class="rating-bar-track"><div class="rating-bar-fill" style="width:40%;background:var(--muted);"></div></div>
+                <span class="rating-val" style="color:var(--muted);">4.0</span>
+              </div>
+            </td>
+            <td style="font-size:12px;color:var(--muted);">Minimal batting opportunity. Held end with 1* off 2 balls.</td>
+          </tr>
+        </tbody>
+      </table>
+      </div>
+    </div>
+
+    <!-- Rating chart -->
+    <div class="card">
+      <div class="card-title">⭐ Average Rating — All Players</div>
+      <canvas id="ratingsChart" style="max-height:320px;"></canvas>
+    </div>
+  </div>
+
+  <!-- ── FIELDING ── -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-title">🧤 Fielding — Combined</div>
+      <div class="section-line"></div>
+    </div>
+    <div class="charts-grid">
+      <div class="card">
+        <div class="card-title">🤲 Catches (Combined)</div>
+        <canvas id="catchesChart"></canvas>
+      </div>
+      <div class="card">
+        <div class="card-title">🏃 Run Outs</div>
+        <canvas id="runOutChart"></canvas>
+      </div>
     </div>
   </div>
 
@@ -782,21 +1014,6 @@
 </footer>
 
 <script>
-// ── DATA ──────────────────────────────────────────────
-const batters  = ['Adithya','Ayyanar','Velu V','Setti','Vishnu','Cahill V','Sathish R','Kumar'];
-const runs     = [6, 48, 49, 18, 2, 20, 13, 1];
-const sr       = [66.7, 141.2, 181.5, 163.6, 200.0, 222.2, 108.3, 50.0];
-const fours    = [1, 5, 6, 1, 0, 3, 2, 0];
-const sixes    = [0, 2, 2, 1, 0, 1, 0, 0];
-const balls    = [9, 34, 27, 11, 1, 9, 12, 2];
-
-const bowlers  = ['Jijo','Adithya','Sanjay','Cahill V','Setti','Rithull V'];
-const wickets  = [1, 1, 6, 1, 0, 1];
-const economy  = [10.5, 8.5, 5.75, 6.0, 6.0, 0.0];
-const overs    = [2.0, 2.0, 4.0, 2.0, 1.0, 0.1];
-const runsCon  = [21, 17, 23, 12, 6, 0];
-
-// ── COLORS ───────────────────────────────────────────
 const OR   = 'rgba(245,82,17,0.85)';
 const ORB  = '#f55211';
 const GOLD = 'rgba(233,196,106,0.85)';
@@ -805,7 +1022,6 @@ const RED  = 'rgba(231,111,81,0.75)';
 const REDB = '#e76f51';
 const GRN  = 'rgba(74,222,128,0.75)';
 const GRNB = '#4ade80';
-
 const GRID = 'rgba(255,255,255,0.05)';
 const TICK = '#888';
 
@@ -828,7 +1044,18 @@ const baseOpts = {
   }
 };
 
-// ── BATTING CHARTS ────────────────────────────────────
+// ── BATTING DATA (Combined) ──────────────────────────────
+const batters = ['Adithya','Ayyanar','Velu V','Setti','Naveen','Alagarasan','Cahill V','Vishnu','Sathish R','Kumar'];
+// Combined runs (L1 + L2)
+const runs  = [87, 48, 55, 37, 18, 17, 32, 14, 13, 1];
+// Career SR across balls faced
+const srComb= [185.1, 137.1, 171.9, 160.9, 138.5, 121.4, 152.4, 280.0, 100.0, 50.0];
+// Combined 4s
+const fours = [5, 5, 6, 4, 2, 3, 4, 3, 2, 0];
+// Combined 6s
+const sixes = [7, 2, 3, 2, 1, 0, 1, 0, 0, 0];
+// Combined balls
+const balls = [47, 35, 32, 23, 13, 14, 21, 5, 13, 2];
 
 // Runs chart
 new Chart(document.getElementById('runsChart'), {
@@ -845,22 +1072,22 @@ new Chart(document.getElementById('runsChart'), {
   options: { ...baseOpts }
 });
 
-// Strike rate chart
+// SR chart
 new Chart(document.getElementById('srChart'), {
   type: 'bar',
   data: {
     labels: batters,
     datasets: [{
-      data: sr,
-      backgroundColor: sr.map(s => s < 80 ? RED : s === Math.max(...sr) ? GOLD : OR),
-      borderColor:     sr.map(s => s < 80 ? REDB : s === Math.max(...sr) ? GOLDB : ORB),
+      data: srComb,
+      backgroundColor: srComb.map(s => s < 80 ? RED : s === Math.max(...srComb) ? GOLD : OR),
+      borderColor:     srComb.map(s => s < 80 ? REDB : s === Math.max(...srComb) ? GOLDB : ORB),
       borderWidth: 2, borderRadius: 6
     }]
   },
   options: { ...baseOpts }
 });
 
-// Boundaries chart
+// Boundary chart
 new Chart(document.getElementById('boundaryChart'), {
   type: 'bar',
   data: {
@@ -886,23 +1113,25 @@ new Chart(document.getElementById('ballsChart'), {
   options: { ...baseOpts }
 });
 
-// Contribution pie
+// Pie chart — run contribution share (total 321 bat runs + 38 extras = 359)
 new Chart(document.getElementById('pieChart'), {
   type: 'doughnut',
   data: {
     labels: [...batters, 'Extras'],
     datasets: [{
-      data: [...runs, 20],
+      data: [...runs, 38],
       backgroundColor: [
-        'rgba(255,140,0,0.8)',
+        'rgba(255,140,0,0.85)',
         'rgba(255,180,0,0.8)',
         'rgba(233,196,106,0.85)',
-        'rgba(255,120,0,0.7)',
-        'rgba(200,100,0,0.6)',
+        'rgba(255,120,0,0.75)',
+        'rgba(74,222,128,0.7)',
+        'rgba(147,112,219,0.75)',
         'rgba(255,200,100,0.75)',
-        'rgba(180,90,0,0.65)',
-        'rgba(140,70,0,0.55)',
-        'rgba(100,100,100,0.5)',
+        'rgba(200,100,0,0.65)',
+        'rgba(180,90,0,0.6)',
+        'rgba(100,70,0,0.5)',
+        'rgba(120,120,120,0.5)',
       ],
       borderColor: '#0d0d0d',
       borderWidth: 3,
@@ -913,11 +1142,7 @@ new Chart(document.getElementById('pieChart'), {
     responsive: true,
     cutout: '60%',
     plugins: {
-      legend: {
-        display: true,
-        position: 'right',
-        labels: { color: TICK, boxWidth: 12, font: { size: 11 }, padding: 16 }
-      },
+      legend: { display: true, position: 'right', labels: { color: TICK, boxWidth: 12, font: { size: 11 }, padding: 14 } },
       tooltip: {
         backgroundColor: '#161616',
         borderColor: '#f55211',
@@ -925,14 +1150,63 @@ new Chart(document.getElementById('pieChart'), {
         titleColor: '#f0f0f0',
         bodyColor: '#888',
         callbacks: {
-          label: ctx => ` ${ctx.label}: ${ctx.parsed} runs (${((ctx.parsed/177)*100).toFixed(1)}%)`
+          label: ctx => ` ${ctx.label}: ${ctx.parsed} (${((ctx.parsed/359)*100).toFixed(1)}%)`
         }
       }
     }
   }
 });
 
-// ── BOWLING CHARTS ────────────────────────────────────
+// Per-match runs breakdown (stacked bar) — only players who batted in both
+const perMatchPlayers = ['Adithya','Ayyanar','Velu V','Setti','Cahill V','Vishnu','Sathish R'];
+const l1Runs = [6, 48, 49, 18, 20, 2, 13];
+const l2Runs = [81, 0, 6, 19, 12, 12, 0];
+
+new Chart(document.getElementById('perMatchRunsChart'), {
+  type: 'bar',
+  data: {
+    labels: perMatchPlayers,
+    datasets: [
+      { label: 'LGE 1 vs Phoenix X1', data: l1Runs, backgroundColor: OR, borderColor: ORB, borderWidth: 2, borderRadius: 4 },
+      { label: 'LGE 2 vs Rayan Rockers', data: l2Runs, backgroundColor: GOLD, borderColor: GOLDB, borderWidth: 2, borderRadius: 4 }
+    ]
+  },
+  options: {
+    ...baseOpts,
+    plugins: { ...baseOpts.plugins, legend: { display: true, labels: { color: TICK, boxWidth: 12, font: { size: 11 } } } }
+  }
+});
+
+// Match comparison chart
+new Chart(document.getElementById('matchCompareChart'), {
+  type: 'bar',
+  data: {
+    labels: ['LGE 1 — vs Phoenix X1', 'LGE 2 — vs Rayan Rockers'],
+    datasets: [
+      { label: 'Total Score', data: [177, 183], backgroundColor: [OR, GOLD], borderColor: [ORB, GOLDB], borderWidth: 2, borderRadius: 6, yAxisID: 'y' },
+      { label: 'Run Rate', data: [10.4, 10.8], type: 'line', borderColor: GRNB, backgroundColor: 'transparent', pointRadius: 8, pointBackgroundColor: GRNB, borderWidth: 2.5, yAxisID: 'y1' }
+    ]
+  },
+  options: {
+    ...baseOpts,
+    plugins: { ...baseOpts.plugins, legend: { display: true, labels: { color: TICK, boxWidth: 12, font: { size: 11 } } } },
+    scales: {
+      x:  { ticks: { color: TICK }, grid: { color: GRID } },
+      y:  { ticks: { color: TICK }, grid: { color: GRID }, title: { display: true, text: 'Score', color: TICK, font: { size: 10 } } },
+      y1: { position: 'right', ticks: { color: GRNB }, grid: { drawOnChartArea: false }, min: 0, title: { display: true, text: 'Run Rate', color: GRNB, font: { size: 10 } } }
+    }
+  }
+});
+
+// ── BOWLING DATA (Combined) ──────────────────────────────
+const bowlers  = ['Sanjay','Setti','Alagarasan','Cahill V','Jijo','Ayyanar','Adithya','Rithull V'];
+const wickets  = [6, 2, 1, 1, 2, 1, 1, 1];
+const economy  = [5.75, 7.0, 6.5, 6.0, 11.0, 8.67, 13.25, 0.0];
+const overs    = [4.0, 5.0, 4.0, 2.0, 4.0, 3.0, 4.0, 0.1];
+const runsCon  = [23, 35, 26, 12, 44, 26, 53, 0];
+const dots     = [14, 21, 13, 8, 9, 10, 9, 1];
+const wides    = [1, 3, 0, 0, 4, 6, 3, 0];
+const noballs  = [0, 0, 0, 0, 0, 0, 2, 0];
 
 // Wickets
 new Chart(document.getElementById('wicketsChart'), {
@@ -956,8 +1230,8 @@ new Chart(document.getElementById('ecoChart'), {
     labels: bowlers,
     datasets: [{
       data: economy,
-      backgroundColor: economy.map(e => e === 0 ? GRN : e <= 7 ? GRN : e <= 9 ? GOLD : RED),
-      borderColor:     economy.map(e => e === 0 ? GRNB : e <= 7 ? GRNB : e <= 9 ? GOLDB : REDB),
+      backgroundColor: economy.map(e => e === 0 ? GRN : e <= 7 ? GRN : e <= 10 ? GOLD : RED),
+      borderColor:     economy.map(e => e === 0 ? GRNB : e <= 7 ? GRNB : e <= 10 ? GOLDB : REDB),
       borderWidth: 2, borderRadius: 6
     }]
   },
@@ -988,7 +1262,129 @@ new Chart(document.getElementById('runsConcededChart'), {
   },
   options: { ...baseOpts }
 });
-</script>
 
+// Dot balls
+new Chart(document.getElementById('dotChart'), {
+  type: 'bar',
+  data: {
+    labels: bowlers,
+    datasets: [{
+      data: dots,
+      backgroundColor: dots.map(d => d === Math.max(...dots) ? GOLD : OR),
+      borderColor:     dots.map(d => d === Math.max(...dots) ? GOLDB : ORB),
+      borderWidth: 2, borderRadius: 6
+    }]
+  },
+  options: { ...baseOpts }
+});
+
+// Wides & No-balls
+new Chart(document.getElementById('widesChart'), {
+  type: 'bar',
+  data: {
+    labels: bowlers,
+    datasets: [
+      { label: 'Wides', data: wides, backgroundColor: RED, borderColor: REDB, borderWidth: 2, borderRadius: 4 },
+      { label: 'No Balls', data: noballs, backgroundColor: GOLD, borderColor: GOLDB, borderWidth: 2, borderRadius: 4 }
+    ]
+  },
+  options: {
+    ...baseOpts,
+    plugins: { ...baseOpts.plugins, legend: { display: true, labels: { color: TICK, boxWidth: 12, font: { size: 11 } } } }
+  }
+});
+
+// ── RATINGS CHART ────────────────────────────────────────
+const ratingPlayers = ['Sanjay','Adithya','Velu V (C)','Setti','Alagarasan','Ayyanar','Cahill V','Naveen','Jijo','Vishnu','Sathish R','Rithull V','Kumar'];
+const avgRatings    = [10.0, 8.0, 8.0, 8.0, 8.0, 7.0, 6.75, 6.0, 6.0, 5.75, 4.75, 5.5, 4.0];
+
+new Chart(document.getElementById('ratingsChart'), {
+  type: 'bar',
+  data: {
+    labels: ratingPlayers,
+    datasets: [{
+      label: 'Avg Rating',
+      data: avgRatings,
+      backgroundColor: avgRatings.map(r => r >= 9 ? GOLD : r >= 7 ? OR : r >= 5.5 ? 'rgba(255,140,0,0.45)' : RED),
+      borderColor:     avgRatings.map(r => r >= 9 ? GOLDB : r >= 7 ? ORB : r >= 5.5 ? ORB : REDB),
+      borderWidth: 2, borderRadius: 6,
+    }]
+  },
+  options: {
+    ...baseOpts,
+    scales: {
+      x: { ticks: { color: TICK, font: { size: 10 } }, grid: { color: GRID } },
+      y: { ticks: { color: TICK }, grid: { color: GRID }, min: 0, max: 10,
+           title: { display: true, text: 'Rating / 10', color: TICK, font: { size: 10 } } }
+    }
+  }
+});
+
+// ── FIELDING ────────────────────────────────────────────
+// Catches: Velu V = 6(L1) + 3(L2) = 9, Adithya=0+1=1, Naveen=1+0=1, Dinesh=1+0=1, Setti=1+0=1, Jijo=1+0=1
+new Chart(document.getElementById('catchesChart'), {
+  type: 'doughnut',
+  data: {
+    labels: ['Velu V (C/Wk)', 'Naveen', 'Dinesh', 'Setti', 'Jijo', 'Adithya'],
+    datasets: [{
+      data: [9, 1, 1, 1, 1, 1],
+      backgroundColor: [GOLD, OR, GRN, RED, 'rgba(147,112,219,0.8)', 'rgba(64,224,208,0.75)'],
+      borderColor: '#0d0d0d',
+      borderWidth: 3,
+    }]
+  },
+  options: {
+    responsive: true,
+    plugins: {
+      legend: { display: true, position: 'bottom', labels: { color: TICK, boxWidth: 14, font: { size: 11 }, padding: 14 } },
+      tooltip: {
+        backgroundColor: '#161616', borderColor: '#f55211', borderWidth: 1,
+        titleColor: '#f0f0f0', bodyColor: '#888',
+      }
+    }
+  }
+});
+
+// Run Outs: L1 = none; L2 = Sanjay/Alagarasan (1)
+new Chart(document.getElementById('runOutChart'), {
+  type: 'doughnut',
+  data: {
+    labels: ['Sanjay / Alagarasan (LGE 2)'],
+    datasets: [{
+      data: [1],
+      backgroundColor: [OR],
+      borderColor: '#0d0d0d',
+      borderWidth: 3,
+    }]
+  },
+  options: {
+    responsive: true,
+    cutout: '70%',
+    plugins: {
+      legend: { display: true, position: 'bottom', labels: { color: TICK, boxWidth: 14, font: { size: 11 }, padding: 14 } },
+      tooltip: {
+        backgroundColor: '#161616', borderColor: '#f55211', borderWidth: 1,
+        titleColor: '#f0f0f0', bodyColor: '#888',
+      }
+    }
+  },
+  plugins: [{
+    id: 'centerText',
+    beforeDraw(chart) {
+      const { width, height, ctx } = chart;
+      ctx.save();
+      ctx.font = `bold 14px 'DM Sans', sans-serif`;
+      ctx.fillStyle = '#f56931';
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.fillText('1 Run Out', width / 2, height / 2 - 10);
+      ctx.font = `11px 'DM Sans', sans-serif`;
+      ctx.fillStyle = '#888';
+      ctx.fillText('across 2 matches', width / 2, height / 2 + 10);
+      ctx.restore();
+    }
+  }]
+});
+</script>
 </body>
 </html>
