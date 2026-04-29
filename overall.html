@@ -439,7 +439,7 @@
       <div class="s-card"><div class="s-val">322</div><div class="s-lbl">Bat Runs</div></div>
       <div class="s-card"><div class="s-val">38</div><div class="s-lbl">Extras</div></div>
       <div class="s-card"><div class="s-val">10.6</div><div class="s-lbl">Avg Run Rate</div></div>
-      <div class="s-card"><div class="s-val">15</div><div class="s-lbl">Wkts Taken</div></div>
+      <div class="s-card"><div class="s-val">17</div><div class="s-lbl">Wkts Taken</div></div>
       <div class="s-card"><div class="s-val">81⭐</div><div class="s-lbl">Top Score</div></div>
       <div class="s-card"><div class="s-val">6⭐</div><div class="s-lbl">Best Bowling</div></div>
       <div class="s-card"><div class="s-val">24</div><div class="s-lbl">4s Hit</div></div>
@@ -612,6 +612,14 @@
       <div class="card">
         <div class="card-title">🟠 Balls Faced</div>
         <canvas id="ballsChart"></canvas>
+      </div>
+      <div class="card">
+        <div class="card-title">🟠 Most Fours (4s) Hit</div>
+        <canvas id="foursChart"></canvas>
+      </div>
+      <div class="card">
+        <div class="card-title">💥 Most Sixes (6s) Hit</div>
+        <canvas id="sixesChart"></canvas>
       </div>
       <div class="card full">
         <div class="card-title">🥧 Run Contribution Share (322 bat runs + 38 extras)</div>
@@ -1382,6 +1390,103 @@ new Chart(document.getElementById('runOutChart'), {
       ctx.font = `11px 'DM Sans', sans-serif`;
       ctx.fillStyle = '#888';
       ctx.fillText('across 2 matches', width / 2, height / 2 + 10);
+      ctx.restore();
+    }
+  }]
+});
+
+// ── MOST 4s DOUGHNUT ─────────────────────────────────────
+// Combined fours: Adithya=5, Ayyanar=5, Velu V=6, Setti=4, Cahill V=4, Vishnu=3, Alagarasan=3, Naveen=2, Sathish R=2, Kumar=0
+const foursPlayers = ['Velu V (C)', 'Adithya', 'Ayyanar', 'Setti', 'Cahill V', 'Vishnu', 'Alagarasan', 'Naveen', 'Sathish R'];
+const foursData    = [6, 5, 5, 4, 4, 3, 3, 2, 2];
+new Chart(document.getElementById('foursChart'), {
+  type: 'doughnut',
+  data: {
+    labels: foursPlayers,
+    datasets: [{
+      data: foursData,
+      backgroundColor: [
+        GOLD, OR, 'rgba(255,180,0,0.8)', GRN, 'rgba(147,112,219,0.8)',
+        RED, 'rgba(64,224,208,0.75)', 'rgba(255,99,132,0.75)', 'rgba(100,149,237,0.75)'
+      ],
+      borderColor: '#0d0d0d',
+      borderWidth: 3,
+      hoverOffset: 8,
+    }]
+  },
+  options: {
+    responsive: true,
+    cutout: '60%',
+    plugins: {
+      legend: { display: true, position: 'bottom', labels: { color: TICK, boxWidth: 12, font: { size: 11 }, padding: 12 } },
+      tooltip: {
+        backgroundColor: '#161616', borderColor: '#f55211', borderWidth: 1,
+        titleColor: '#f0f0f0', bodyColor: '#888',
+        callbacks: { label: ctx => ` ${ctx.label}: ${ctx.parsed} fours` }
+      }
+    }
+  },
+  plugins: [{
+    id: 'centerText4s',
+    beforeDraw(chart) {
+      const { width, height, ctx } = chart;
+      ctx.save();
+      ctx.font = `bold 22px 'Bebas Neue', sans-serif`;
+      ctx.fillStyle = '#e9c46a';
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.fillText('34 Fours', width / 2, height / 2 - 10);
+      ctx.font = `11px 'DM Sans', sans-serif`;
+      ctx.fillStyle = '#888';
+      ctx.fillText('across 2 matches', width / 2, height / 2 + 12);
+      ctx.restore();
+    }
+  }]
+});
+
+// ── MOST 6s DOUGHNUT ─────────────────────────────────────
+// Combined sixes: Adithya=7, Velu V=3, Ayyanar=2, Setti=2, Cahill V=1, Naveen=1
+const sixesPlayers = ['Adithya', 'Velu V (C)', 'Ayyanar', 'Setti', 'Cahill V', 'Naveen'];
+const sixesData    = [7, 3, 2, 2, 1, 1];
+new Chart(document.getElementById('sixesChart'), {
+  type: 'doughnut',
+  data: {
+    labels: sixesPlayers,
+    datasets: [{
+      data: sixesData,
+      backgroundColor: [
+        GOLD, OR, 'rgba(255,180,0,0.8)', GRN, 'rgba(147,112,219,0.8)', RED
+      ],
+      borderColor: '#0d0d0d',
+      borderWidth: 3,
+      hoverOffset: 8,
+    }]
+  },
+  options: {
+    responsive: true,
+    cutout: '60%',
+    plugins: {
+      legend: { display: true, position: 'bottom', labels: { color: TICK, boxWidth: 12, font: { size: 11 }, padding: 12 } },
+      tooltip: {
+        backgroundColor: '#161616', borderColor: '#f55211', borderWidth: 1,
+        titleColor: '#f0f0f0', bodyColor: '#888',
+        callbacks: { label: ctx => ` ${ctx.label}: ${ctx.parsed} sixes` }
+      }
+    }
+  },
+  plugins: [{
+    id: 'centerText6s',
+    beforeDraw(chart) {
+      const { width, height, ctx } = chart;
+      ctx.save();
+      ctx.font = `bold 22px 'Bebas Neue', sans-serif`;
+      ctx.fillStyle = '#e9c46a';
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.fillText('16 Sixes', width / 2, height / 2 - 10);
+      ctx.font = `11px 'DM Sans', sans-serif`;
+      ctx.fillStyle = '#888';
+      ctx.fillText('across 2 matches', width / 2, height / 2 + 12);
       ctx.restore();
     }
   }]
