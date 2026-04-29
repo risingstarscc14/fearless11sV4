@@ -436,7 +436,7 @@
       <div class="s-card"><div class="s-val">2</div><div class="s-lbl">Matches</div></div>
       <div class="s-card"><div class="s-val">2</div><div class="s-lbl">Won</div></div>
       <div class="s-card"><div class="s-val">360</div><div class="s-lbl">Total Runs</div></div>
-      <div class="s-card"><div class="s-val">321</div><div class="s-lbl">Bat Runs</div></div>
+      <div class="s-card"><div class="s-val">322</div><div class="s-lbl">Bat Runs</div></div>
       <div class="s-card"><div class="s-val">38</div><div class="s-lbl">Extras</div></div>
       <div class="s-card"><div class="s-val">10.6</div><div class="s-lbl">Avg Run Rate</div></div>
       <div class="s-card"><div class="s-val">15</div><div class="s-lbl">Wkts Taken</div></div>
@@ -614,7 +614,7 @@
         <canvas id="ballsChart"></canvas>
       </div>
       <div class="card full">
-        <div class="card-title">🥧 Run Contribution Share (321 bat runs + 38 extras)</div>
+        <div class="card-title">🥧 Run Contribution Share (322 bat runs + 38 extras)</div>
         <canvas id="pieChart" style="max-height:300px;"></canvas>
       </div>
       <!-- Per-match runs breakdown -->
@@ -651,14 +651,14 @@
           </tr>
         </thead>
         <tbody>
-          <!-- Sanjay: L1=4ov,23r,6w,14d,1wd,0nb; L2=DNB → totals -->
+          <!-- Sanjay: L1=4ov,23r,6w,14d,1wd,0nb; L2=2ov,28r,0w,6d,7wd,0nb → totals -->
           <tr>
             <td class="rank top">1</td>
             <td class="player-name-cell">Sanjay ⭐ <span class="tag mvp">6-fer</span></td>
-            <td>1</td><td>4.0</td><td>23</td>
+            <td>2</td><td>6.0</td><td>51</td>
             <td><span class="wick-badge star">6</span></td>
-            <td><div class="eco-cell"><div class="eco-dot low"></div> 5.75</div></td>
-            <td>14</td><td>1</td><td>0</td>
+            <td><div class="eco-cell"><div class="eco-dot med"></div> 8.50</div></td>
+            <td>20</td><td>8</td><td>0</td>
           </tr>
           <!-- Setti: L1=1ov,6r,0w,5d; L2=4ov,29r,2w,16d,3wd → 5ov,35r,2w,21d,3wd -->
           <tr>
@@ -796,20 +796,20 @@
             </td>
             <td style="font-size:12px;color:var(--green);">Match-winning 81 in L2. Consistent presence across matches. Explosive finisher.</td>
           </tr>
-          <!-- Sanjay: L1=10/10, L2=DNP → 10.0 (1 match) -->
+          <!-- Sanjay: L1=10/10, L2=4/10 (0wkts, 7wd, eco 14.0) → avg 7.0 (2 matches) -->
           <tr style="background:rgba(233,196,106,0.04);">
             <td class="rank top">2</td>
             <td class="player-name-cell">Sanjay ⭐ <span class="tag potm">POTM L1</span></td>
-            <td>1</td>
+            <td>2</td>
             <td><span style="font-family:'Bebas Neue',sans-serif;font-size:18px;color:var(--gold);">10/10</span></td>
-            <td style="color:var(--muted);font-size:12px;">DNP</td>
+            <td><span style="font-family:'Bebas Neue',sans-serif;font-size:18px;color:var(--orange-light);">4/10</span></td>
             <td>
               <div class="rating-bar-wrap">
-                <div class="rating-bar-track"><div class="rating-bar-fill" style="width:100%;background:var(--gold);"></div></div>
-                <span class="rating-val" style="color:var(--gold);">10.0</span>
+                <div class="rating-bar-track"><div class="rating-bar-fill" style="width:70%;background:var(--orange-light);"></div></div>
+                <span class="rating-val" style="color:var(--orange-light);">7.0</span>
               </div>
             </td>
-            <td style="font-size:12px;color:var(--green);">6/23 match-winning spell. Single-handedly dismantled Phoenix X1 lineup.</td>
+            <td style="font-size:12px;color:var(--green);">6/23 match-winning spell in L1. L2 was costly — 0 wickets, 7 wides at eco 14.0. Still leads wicket chart overall.</td>
           </tr>
           <!-- Velu V: L1=9.5, L2=6.5 → avg 8.0 -->
           <tr>
@@ -1113,7 +1113,7 @@ new Chart(document.getElementById('ballsChart'), {
   options: { ...baseOpts }
 });
 
-// Pie chart — run contribution share (total 321 bat runs + 38 extras = 359)
+// Pie chart — run contribution share (total 322 bat runs + 38 extras = 360)
 new Chart(document.getElementById('pieChart'), {
   type: 'doughnut',
   data: {
@@ -1201,11 +1201,11 @@ new Chart(document.getElementById('matchCompareChart'), {
 // ── BOWLING DATA (Combined) ──────────────────────────────
 const bowlers  = ['Sanjay','Setti','Alagarasan','Cahill V','Jijo','Ayyanar','Adithya','Rithull V'];
 const wickets  = [6, 2, 1, 1, 2, 1, 1, 1];
-const economy  = [5.75, 7.0, 6.5, 6.0, 11.0, 8.67, 13.25, 0.0];
-const overs    = [4.0, 5.0, 4.0, 2.0, 4.0, 3.0, 4.0, 0.1];
-const runsCon  = [23, 35, 26, 12, 44, 26, 53, 0];
-const dots     = [14, 21, 13, 8, 9, 10, 9, 1];
-const wides    = [1, 3, 0, 0, 4, 6, 3, 0];
+const economy  = [8.50, 7.0, 6.5, 6.0, 11.0, 8.67, 13.25, 0.0];
+const overs    = [6.0, 5.0, 4.0, 2.0, 4.0, 3.0, 4.0, 0.1];
+const runsCon  = [51, 35, 26, 12, 44, 26, 53, 0];
+const dots     = [20, 21, 13, 8, 9, 10, 9, 1];
+const wides    = [8, 3, 0, 0, 4, 6, 3, 0];
 const noballs  = [0, 0, 0, 0, 0, 0, 2, 0];
 
 // Wickets
@@ -1296,7 +1296,7 @@ new Chart(document.getElementById('widesChart'), {
 
 // ── RATINGS CHART ────────────────────────────────────────
 const ratingPlayers = ['Sanjay','Adithya','Velu V (C)','Setti','Alagarasan','Ayyanar','Cahill V','Naveen','Jijo','Vishnu','Sathish R','Rithull V','Kumar'];
-const avgRatings    = [10.0, 8.0, 8.0, 8.0, 8.0, 7.0, 6.75, 6.0, 6.0, 5.75, 4.75, 5.5, 4.0];
+const avgRatings    = [7.0, 8.0, 8.0, 8.0, 8.0, 7.0, 6.75, 6.0, 6.0, 5.75, 4.75, 5.5, 4.0];
 
 new Chart(document.getElementById('ratingsChart'), {
   type: 'bar',
